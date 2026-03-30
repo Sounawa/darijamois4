@@ -1,894 +1,833 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Darija pour enfants - Mois 4 (rouge)</title>
-    <style>
-        * {
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-        body {
-            background-color: #fbe9e7;
-            padding: 10px;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-        #app {
-            max-width: 1200px;
-            margin: 0 auto;
-            width: 100%;
-            flex: 1;
-        }
-        header {
-            background-color: #e53935;
-            padding: 15px;
-            border-radius: 20px;
-            text-align: center;
-            margin-bottom: 15px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-        header h1 {
-            font-size: 2.2rem;
-            color: white;
-        }
-        header .subtitle {
-            font-size: 1.2rem;
-            color: white;
-            margin-top: 5px;
-        }
-        .progress-bar {
-            background-color: #b71c1c;
-            border-radius: 10px;
-            height: 12px;
-            margin-top: 10px;
-            overflow: hidden;
-        }
-        .progress-fill {
-            background: linear-gradient(90deg, #ffd54f, #ffca28);
-            height: 100%;
-            transition: width 0.5s ease;
-        }
-        .progress-text {
-            color: #ffcdd2;
-            font-size: 0.9rem;
-            margin-top: 5px;
-        }
-        nav {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        .onglet {
-            background-color: #fff;
-            border: none;
-            border-radius: 40px;
-            padding: 15px 25px;
-            font-size: 1.4rem;
-            font-weight: bold;
-            color: #b71c1c;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            cursor: pointer;
-            transition: 0.3s;
-            flex: 0 1 auto;
-            min-width: 120px;
-            touch-action: manipulation;
-        }
-        .onglet.actif {
-            background-color: #ef5350;
-            color: white;
-            box-shadow: 0 4px 8px rgba(229,57,53,0.4);
-        }
-        .onglet:active {
-            transform: scale(0.95);
-        }
-        .contenu-onglet {
-            background-color: white;
-            border-radius: 30px;
-            padding: 25px;
-            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-        }
-        h2 {
-            color: #b71c1c;
-            margin-bottom: 20px;
-            font-size: 2rem;
-            border-bottom: 3px solid #ef9a9a;
-            padding-bottom: 10px;
-        }
-        h3 {
-            color: #c62828;
-            margin: 20px 0 10px;
-            font-size: 1.6rem;
-        }
-        .grille-mots {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 15px;
-        }
-        .carte-mot {
-            background-color: #ffebee;
-            border-radius: 20px;
-            padding: 15px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            display: flex;
-            flex-direction: column;
-            border-left: 8px solid #ef9a9a;
-        }
-        .carte-mot.termine {
-            border-left-color: #4caf50;
-            opacity: 0.8;
-        }
-        .francais {
-            font-weight: bold;
-            font-size: 1.3rem;
-            color: #b71c1c;
-        }
-        .arabe {
-            font-size: 1.8rem;
-            direction: rtl;
-            font-family: 'Arial', sans-serif;
-            margin: 5px 0;
-            color: #c0392b;
-        }
-        .latin {
-            font-style: italic;
-            color: #c62828;
-            font-size: 1.2rem;
-            margin-bottom: 5px;
-        }
-        .phrase {
-            background-color: #ffcdd2;
-            padding: 5px;
-            border-radius: 5px;
-            margin-top: 5px;
-            font-size: 1rem;
-        }
-        .dialogue {
-            background-color: #ffcdd2;
-            border-radius: 25px;
-            padding: 20px;
-            margin-bottom: 25px;
-        }
-        .personnages {
-            font-weight: bold;
-            color: #b71c1c;
-            margin-bottom: 10px;
-            font-size: 1.3rem;
-        }
-        .replique {
-            display: grid;
-            grid-template-columns: 100px 1fr 1fr 1fr;
-            gap: 10px;
-            margin: 10px 0;
-            padding: 8px;
-            background-color: #ffebee;
-            border-radius: 15px;
-            align-items: center;
-        }
-        @media (max-width: 768px) {
-            .replique {
-                grid-template-columns: 1fr;
-                gap: 5px;
-            }
-        }
-        .role {
-            font-weight: bold;
-            color: #d35400;
-        }
-        .latin-replique {
-            font-style: italic;
-        }
-        .francais-replique {
-            color: #7f8c8d;
-        }
-        .tableau-verbe {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            font-size: 1.2rem;
-        }
-        .tableau-verbe th {
-            background-color: #e53935;
-            color: white;
-            padding: 10px;
-        }
-        .tableau-verbe td {
-            border: 1px solid #bdc3c7;
-            padding: 10px;
-            text-align: center;
-        }
-        .tableau-verbe tr:hover {
-            background-color: #ffebee;
-        }
-        .revision-options {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-            margin: 20px 0;
-        }
-        .btn-revision, .btn-terminer {
-            background-color: #e53935;
-            border: none;
-            border-radius: 40px;
-            padding: 15px 25px;
-            color: white;
-            font-size: 1.3rem;
-            cursor: pointer;
-            flex: 1;
-            touch-action: manipulation;
-        }
-        .btn-terminer {
-            background-color: #b71c1c;
-            margin-top: 10px;
-        }
-        .btn-revision:hover, .btn-terminer:hover {
-            background-color: #ef5350;
-        }
-        .liste-revision {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
-        }
-        .carte-revision {
-            background-color: #ffebee;
-            border-radius: 15px;
-            padding: 12px;
-            border-left: 8px solid #ef9a9a;
-        }
-        .carte-revision .mois-badge {
-            font-size: 0.8rem;
-            padding: 2px 8px;
-            border-radius: 10px;
-            display: inline-block;
-            margin-bottom: 5px;
-        }
-        .mois-1 { background-color: #bbdefb; color: #1565c0; }
-        .mois-2 { background-color: #c8e6c9; color: #2e7d32; }
-        .mois-3 { background-color: #e1bee7; color: #7b1fa2; }
-        .mois-4 { background-color: #ffcdd2; color: #c62828; }
-        .message-felicitation {
-            background-color: #ef9a9a;
-            color: white;
-            text-align: center;
-            padding: 15px;
-            border-radius: 30px;
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-top: 20px;
-        }
-        .theme-carte {
-            background-color: #fff;
-            border-radius: 25px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            overflow: hidden;
-        }
-        .theme-header {
-            background: linear-gradient(135deg, #e53935, #ef5350);
-            color: white;
-            padding: 15px 20px;
-            font-size: 1.5rem;
-            font-weight: bold;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .theme-header.completed {
-            background: linear-gradient(135deg, #43a047, #66bb6a);
-        }
-        .theme-content {
-            padding: 15px;
-        }
-        .mot-item {
-            background-color: #fff;
-            border-radius: 15px;
-            padding: 12px;
-            margin-bottom: 10px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
-        .mot-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 8px;
-        }
-        .mot-label {
-            font-size: 0.75rem;
-            color: #888;
-            text-transform: uppercase;
-        }
-        footer {
-            text-align: center;
-            color: #7f8c8d;
-            margin-top: 20px;
-            padding: 15px;
-        }
-        .stats-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
-        }
-        .stat-card {
-            background: linear-gradient(135deg, #ffebee, #ffcdd2);
-            border-radius: 20px;
-            padding: 20px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
-        }
-        .stat-icon {
-            font-size: 2.5rem;
-        }
-        .stat-text h4 {
-            color: #b71c1c;
-            font-size: 1.2rem;
-        }
-        .stat-text p {
-            color: #666;
-            font-size: 0.9rem;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apprentissage Darija - Mois 4</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    [x-cloak] { display: none !important; }
+    .arabic-text { 
+      font-family: 'Amiri', 'Noto Naskh Arabic', sans-serif; 
+      direction: rtl; 
+      line-height: 1.6; 
+    }
+    .tab-active { 
+      background-color: #991b1b; 
+      color: white; 
+    }
+    .tab-btn {
+      cursor: pointer;
+      user-select: none;
+    }
+    .theme-card {
+      cursor: pointer;
+      user-select: none;
+    }
+    .word-card {
+      cursor: pointer;
+      user-select: none;
+    }
+    .word-card:hover { 
+      background-color: #fef2f2; 
+    }
+    .progress-bar { 
+      transition: width 0.5s ease-in-out; 
+    }
+    .quiz-option {
+      cursor: pointer;
+      user-select: none;
+    }
+    .quiz-option:disabled { 
+      cursor: not-allowed; 
+      opacity: 0.8; 
+    }
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+  </style>
 </head>
-<body>
-<div id="app">
-    <header>
-        <h1>🌟 Darija pour enfants - Mois 4 (rouge) 🌟</h1>
-        <p class="subtitle">Santé • Métiers • Loisirs • Nourriture (20 mots par thème)</p>
-        <div class="progress-bar">
-            <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+<body class="bg-gradient-to-br from-red-50 to-orange-100 min-h-screen flex flex-col">
+  
+  <!-- Header -->
+  <header class="bg-gradient-to-r from-red-600 to-orange-600 text-white shadow-lg sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 py-4">
+      <h1 class="text-2xl md:text-3xl font-bold text-center">🍎 Apprentissage Darija - Mois 4</h1>
+      <p class="text-center text-red-100 mt-1 text-sm md:text-base">Santé • Métiers • Loisirs • Nourriture (2)</p>
+    </div>
+  </header>
+
+  <!-- Progress -->
+  <div class="max-w-6xl mx-auto px-4 py-3">
+    <div class="bg-white rounded-xl p-4 shadow-md">
+      <div class="flex justify-between text-sm text-gray-600 mb-2">
+        <span>📊 Progression</span>
+        <span id="progress-text">0%</span>
+      </div>
+      <div class="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+        <div id="progress-bar" class="bg-gradient-to-r from-red-500 to-orange-500 h-3 rounded-full progress-bar" style="width: 0%"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabs Navigation -->
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="flex flex-wrap gap-2 justify-center mb-4 sticky top-20 z-40 bg-red-50/90 backdrop-blur-sm py-2 rounded-xl">
+      <button id="tab-accueil" class="tab-btn px-4 py-2 md:px-6 md:py-3 rounded-full font-semibold text-sm md:text-base transition-all bg-white text-gray-700 hover:bg-red-100" data-tab="accueil">🏠 Accueil</button>
+      <button id="tab-lecons" class="tab-btn px-4 py-2 md:px-6 md:py-3 rounded-full font-semibold text-sm md:text-base transition-all bg-white text-gray-700 hover:bg-red-100" data-tab="lecons">📖 Leçons</button>
+      <button id="tab-dialogues" class="tab-btn px-4 py-2 md:px-6 md:py-3 rounded-full font-semibold text-sm md:text-base transition-all bg-white text-gray-700 hover:bg-red-100" data-tab="dialogues">💬 Dialogues</button>
+      <button id="tab-verbes" class="tab-btn px-4 py-2 md:px-6 md:py-3 rounded-full font-semibold text-sm md:text-base transition-all bg-white text-gray-700 hover:bg-red-100" data-tab="verbes">🔤 Verbes</button>
+      <button id="tab-revision" class="tab-btn px-4 py-2 md:px-6 md:py-3 rounded-full font-semibold text-sm md:text-base transition-all bg-white text-gray-700 hover:bg-red-100" data-tab="revision">🎯 Révision</button>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="max-w-6xl mx-auto px-4 pb-8 flex-grow">
+    
+    <!-- Accueil -->
+    <div id="content-accueil" class="tab-content active">
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+        <div class="theme-card bg-white rounded-2xl p-5 md:p-6 shadow-lg text-center transition-all hover:shadow-xl" data-tab="lecons">
+          <div class="text-4xl md:text-5xl mb-3">🏥</div>
+          <h3 class="text-lg md:text-xl font-bold text-gray-800">Leçons</h3>
+          <p class="text-gray-500 mt-2 text-sm">4 thèmes • 80 mots</p>
         </div>
-        <p class="progress-text" id="progressText">0/4 leçons terminées</p>
-    </header>
-
-    <nav>
-        <button class="onglet" data-onglet="accueil">🏠 Accueil</button>
-        <button class="onglet" data-onglet="lecons">📘 Leçons</button>
-        <button class="onglet" data-onglet="dialogues">💬 Dialogues</button>
-        <button class="onglet" data-onglet="conjugaisons">⚙️ Verbes</button>
-        <button class="onglet" data-onglet="revision">🔄 Révision</button>
-    </nav>
-
-    <div id="contenu" class="contenu-onglet">
-        <!-- injection dynamique -->
+        <div class="theme-card bg-white rounded-2xl p-5 md:p-6 shadow-lg text-center transition-all hover:shadow-xl" data-tab="dialogues">
+          <div class="text-4xl md:text-5xl mb-3">💬</div>
+          <h3 class="text-lg md:text-xl font-bold text-gray-800">Dialogues</h3>
+          <p class="text-gray-500 mt-2 text-sm">5 dialogues</p>
+        </div>
+        <div class="theme-card bg-white rounded-2xl p-5 md:p-6 shadow-lg text-center transition-all hover:shadow-xl" data-tab="verbes">
+          <div class="text-4xl md:text-5xl mb-3">🔤</div>
+          <h3 class="text-lg md:text-xl font-bold text-gray-800">Verbes</h3>
+          <p class="text-gray-500 mt-2 text-sm">20 verbes conjugués</p>
+        </div>
+        <div class="theme-card bg-white rounded-2xl p-5 md:p-6 shadow-lg text-center transition-all hover:shadow-xl" data-tab="revision">
+          <div class="text-4xl md:text-5xl mb-3">🎯</div>
+          <h3 class="text-lg md:text-xl font-bold text-gray-800">Révision</h3>
+          <p class="text-gray-500 mt-2 text-sm">Quiz interactif</p>
+        </div>
+      </div>
+      <div class="mt-8 bg-white rounded-2xl p-6 shadow-lg">
+        <h3 class="text-xl font-bold text-gray-800 mb-4">📌 Contenu du Mois 4</h3>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+          <div class="p-4 bg-red-50 rounded-xl"><div class="text-2xl font-bold text-red-600">80</div><div class="text-sm text-gray-600">mots à apprendre</div></div>
+          <div class="p-4 bg-orange-50 rounded-xl"><div class="text-2xl font-bold text-orange-600">5</div><div class="text-sm text-gray-600">dialogues</div></div>
+          <div class="p-4 bg-amber-50 rounded-xl"><div class="text-2xl font-bold text-amber-600">20</div><div class="text-sm text-gray-600">verbes</div></div>
+          <div class="p-4 bg-pink-50 rounded-xl"><div class="text-2xl font-bold text-pink-600">100%</div><div class="text-sm text-gray-600">Révision M1-4</div></div>
+        </div>
+      </div>
     </div>
 
-    <footer>
-        <p>© 2026 - Mois 4 : 80 mots, 5 dialogues, 20 nouveaux verbes - Révision des mois 1,2,3,4</p>
-    </footer>
-</div>
+    <!-- Leçons -->
+    <div id="content-lecons" class="tab-content">
+      <div class="grid md:grid-cols-2 gap-4 md:gap-6">
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+          <div class="bg-gradient-to-r from-red-500 to-rose-500 p-4">
+            <h3 class="text-xl font-bold text-white">🏥 Santé & Corps (2)</h3>
+          </div>
+          <div class="p-4 max-h-80 md:max-h-96 overflow-y-auto">
+            <div class="space-y-3" id="theme-sante"></div>
+          </div>
+        </div>
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+          <div class="bg-gradient-to-r from-amber-500 to-yellow-500 p-4">
+            <h3 class="text-xl font-bold text-white">👷 Métiers & Travail</h3>
+          </div>
+          <div class="p-4 max-h-80 md:max-h-96 overflow-y-auto">
+            <div class="space-y-3" id="theme-metiers"></div>
+          </div>
+        </div>
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+          <div class="bg-gradient-to-r from-purple-500 to-pink-500 p-4">
+            <h3 class="text-xl font-bold text-white">🎮 Loisirs & Sports</h3>
+          </div>
+          <div class="p-4 max-h-80 md:max-h-96 overflow-y-auto">
+            <div class="space-y-3" id="theme-loisirs"></div>
+          </div>
+        </div>
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+          <div class="bg-gradient-to-r from-orange-500 to-red-500 p-4">
+            <h3 class="text-xl font-bold text-white">🍽️ Nourriture (2)</h3>
+          </div>
+          <div class="p-4 max-h-80 md:max-h-96 overflow-y-auto">
+            <div class="space-y-3" id="theme-nourriture"></div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-<script>
-(function() {
-    // ---------- DONNÉES DES MOIS PRÉCÉDENTS (pour révision) ----------
-    const vocabulaireMois1 = [
-        { mois: 1, theme: "Salutations", fr: "bonjour", arabe: "سَلَام", latin: "salam", phrase_latin: "Salam, kidayr?", phrase_fr: "Bonjour, comment ça va?" },
-        { mois: 1, theme: "Salutations", fr: "comment ça va?", arabe: "كِيدَايْر؟", latin: "kidayr?", phrase_latin: "Kidayr, l7amdolillah?", phrase_fr: "Comment ça va, grâce à Dieu?" },
-        { mois: 1, theme: "Salutations", fr: "merci", arabe: "شُكْرَان", latin: "chokran", phrase_latin: "Chokran bzzaf", phrase_fr: "Merci beaucoup" },
-        { mois: 1, theme: "Salutations", fr: "au revoir", arabe: "بْسَلَّامَة", latin: "bsalama", phrase_latin: "Bsalama, choufek m3a slama", phrase_fr: "Au revoir, à bientôt" },
-        { mois: 1, theme: "Salutations", fr: "s'il te plaît", arabe: "عَفَاك", latin: "3afak", phrase_latin: "3afak, 3tini lma", phrase_fr: "S'il te plaît, donne-moi de l'eau" },
-        { mois: 1, theme: "Famille", fr: "papa", arabe: "بَابَا", latin: "baba", phrase_latin: "Baba f dar", phrase_fr: "Papa est à la maison" },
-        { mois: 1, theme: "Famille", fr: "maman", arabe: "مَامَا", latin: "mama", phrase_latin: "Mama tayba", phrase_fr: "Maman est gentille" },
-        { mois: 1, theme: "Famille", fr: "frère", arabe: "خُو", latin: "kho", phrase_latin: "Kho kbar 3liya", phrase_fr: "Mon frère est plus grand que moi" },
-        { mois: 1, theme: "Famille", fr: "sœur", arabe: "خْتِي", latin: "khti", phrase_latin: "Khti sghira", phrase_fr: "Ma sœur est petite" },
-        { mois: 1, theme: "Famille", fr: "grand-père", arabe: "جَدِّي", latin: "jddi", phrase_latin: "Jddi kbir", phrase_fr: "Mon grand-père est grand" },
-        { mois: 1, theme: "Famille", fr: "grand-mère", arabe: "جَدَّتِي", latin: "jddti", phrase_latin: "Jddti tayba", phrase_fr: "Ma grand-mère est gentille" },
-        { mois: 1, theme: "Famille", fr: "oncle", arabe: "عَمِّي", latin: "3mi", phrase_latin: "3mi 3ndou dar kbira", phrase_fr: "Mon oncle a une grande maison" },
-        { mois: 1, theme: "Famille", fr: "tante", arabe: "خَالَتِي", latin: "khalti", phrase_latin: "Khlati tswl 3lina", phrase_fr: "Ma tante nous rend visite" },
-        { mois: 1, theme: "Famille", fr: "cousin", arabe: "وْلَد خَالِي", latin: "weld khali", phrase_latin: "Weld khali s7abi", phrase_fr: "Mon cousin est mon ami" },
-        { mois: 1, theme: "Famille", fr: "fils", arabe: "وْلَدِي", latin: "wldi", phrase_latin: "Wldi sghir", phrase_fr: "Mon fils est petit" },
-        { mois: 1, theme: "Famille", fr: "fille", arabe: "بْنَتِي", latin: "bnti", phrase_latin: "Bnti zwina", phrase_fr: "Ma fille est belle" },
-        { mois: 1, theme: "Nombres", fr: "un", arabe: "وَاحِد", latin: "wa7d", phrase_latin: "3endi wa7d ktub", phrase_fr: "J'ai un livre" },
-        { mois: 1, theme: "Nombres", fr: "deux", arabe: "جُوج", latin: "jouj", phrase_latin: "3andi jouj khwat", phrase_fr: "J'ai deux frères" },
-        { mois: 1, theme: "Nombres", fr: "trois", arabe: "تْلَاتَة", latin: "tlata", phrase_latin: "Tlata wlid f dar", phrase_fr: "Trois enfants à la maison" },
-        { mois: 1, theme: "Nombres", fr: "quatre", arabe: "رْبْعَة", latin: "rb3a", phrase_latin: "Rb3a 3wam", phrase_fr: "Quatre ans" },
-    ];
+    <!-- Dialogues -->
+    <div id="content-dialogues" class="tab-content">
+      <div class="space-y-4 md:space-y-6" id="dialogues-container"></div>
+    </div>
 
-    const vocabulaireMois2 = [
-        { mois: 2, theme: "École", fr: "école", arabe: "مَدْرَسَة", latin: "madrasa", phrase_latin: "Madrasa f hadak", phrase_fr: "L'école est à côté" },
-        { mois: 2, theme: "École", fr: "classe", arabe: "قِسْم", latin: "9ism", phrase_latin: "9ismi fih 30 tlamid", phrase_fr: "Ma classe a 30 élèves" },
-        { mois: 2, theme: "École", fr: "cahier", arabe: "كِرَّاس", latin: "kerras", phrase_latin: "Kteb f kerras", phrase_fr: "Il a écrit dans le cahier" },
-        { mois: 2, theme: "École", fr: "livre", arabe: "كْتَاب", latin: "ktab", phrase_latin: "Qra ktab", phrase_fr: "Il a lu un livre" },
-        { mois: 2, theme: "École", fr: "stylo", arabe: "قَلَم", latin: "9lam", phrase_latin: "Kteb b 9lam", phrase_fr: "Il a écrit avec un stylo" },
-        { mois: 2, theme: "École", fr: "tableau", arabe: "تَابْلُو", latin: "tablo", phrase_latin: "Ostad kteb f tablo", phrase_fr: "Le professeur a écrit au tableau" },
-        { mois: 2, theme: "École", fr: "professeur", arabe: "أُسْتَاذ", latin: "ostad", phrase_latin: "Ostad 3tina lwa7d", phrase_fr: "Le professeur nous a donné un devoir" },
-        { mois: 2, theme: "École", fr: "élève", arabe: "تِلْمِيد", latin: "tlmid", phrase_latin: "Tlmid mzyan", phrase_fr: "L'élève est bon" },
-        { mois: 2, theme: "Maison", fr: "maison", arabe: "دَار", latin: "dar", phrase_latin: "Dar kbira", phrase_fr: "La maison est grande" },
-        { mois: 2, theme: "Maison", fr: "porte", arabe: "بَاب", latin: "bab", phrase_latin: "Bab m7loul", phrase_fr: "La porte est ouverte" },
-        { mois: 2, theme: "Maison", fr: "fenêtre", arabe: "شُبَّاك", latin: "chobbak", phrase_latin: "Chobbak msed", phrase_fr: "La fenêtre est fermée" },
-        { mois: 2, theme: "Maison", fr: "chambre", arabe: "غُرْفَة", latin: "ghorfa", phrase_latin: "Ghorfa zwina", phrase_fr: "La chambre est belle" },
-        { mois: 2, theme: "Maison", fr: "cuisine", arabe: "مَطْبَخ", latin: "matbakh", phrase_latin: "Matbakh na9i", phrase_fr: "La cuisine est propre" },
-        { mois: 2, theme: "Maison", fr: "salle de bain", arabe: "حَمَّام", latin: "7ammam", phrase_latin: "7ammam sghir", phrase_fr: "La salle de bain est petite" },
-        { mois: 2, theme: "Maison", fr: "salon", arabe: "صَالُون", latin: "salon", phrase_latin: "Salon fih korsi", phrase_fr: "Le salon a un canapé" },
-        { mois: 2, theme: "Maison", fr: "lit", arabe: "فْرَاش", latin: "frach", phrase_latin: "Frach rt7", phrase_fr: "Le lit est confortable" },
-        { mois: 2, theme: "Maison", fr: "table", arabe: "طَّابْلَة", latin: "tabla", phrase_latin: "Tabla f lwsaṭ", phrase_fr: "La table est au milieu" },
-        { mois: 2, theme: "Maison", fr: "chaise", arabe: "كُرْسِي", latin: "kursi", phrase_latin: "Kursi qdim", phrase_fr: "La chaise est vieille" },
-        { mois: 2, theme: "Maison", fr: "télévision", arabe: "تْلِيفِيزْيُون", latin: "tilivizyon", phrase_latin: "Chof tilivizyon", phrase_fr: "Regarder la télé" },
-        { mois: 2, theme: "Maison", fr: "téléphone", arabe: "تْلِيفُون", latin: "tilifoun", phrase_latin: "Tilifoun yirin", phrase_fr: "Le téléphone sonne" },
-    ];
+    <!-- Verbes -->
+    <div id="content-verbes" class="tab-content">
+      <div class="space-y-4" id="verbes-container"></div>
+    </div>
 
-    const vocabulaireMois3 = [
-        { mois: 3, theme: "Sentiments", fr: "joie", arabe: "فَرْحَة", latin: "far7a", phrase_latin: "3endi far7a kbira", phrase_fr: "J'ai une grande joie" },
-        { mois: 3, theme: "Sentiments", fr: "tristesse", arabe: "حُزْن", latin: "7uzn", phrase_latin: "7uzn 3la l7al", phrase_fr: "Triste pour rien" },
-        { mois: 3, theme: "Sentiments", fr: "colère", arabe: "غَضَب", latin: "ghadab", phrase_latin: "Ghadab 3liya", phrase_fr: "En colère contre moi" },
-        { mois: 3, theme: "Sentiments", fr: "peur", arabe: "خُوف", latin: "khof", phrase_latin: "Khof m3a l'3el", phrase_fr: "Peur dans le noir" },
-        { mois: 3, theme: "Sentiments", fr: "amour", arabe: "حُب", latin: "7obb", phrase_latin: "7obb kbir", phrase_fr: "Grand amour" },
-        { mois: 3, theme: "Sentiments", fr: "surprise", arabe: "مُفَاجَأَة", latin: "mofaja2a", phrase_latin: "Mofaja2a mzyana", phrase_fr: "Bonne surprise" },
-        { mois: 3, theme: "Sentiments", fr: "fatigue", arabe: "تْعَب", latin: "t3eb", phrase_latin: "T3eb bzzaf", phrase_fr: "Très fatigué" },
-        { mois: 3, theme: "Sentiments", fr: "faim", arabe: "جُوع", latin: "jou3", phrase_latin: "Jou3 m3a l'3achiya", phrase_fr: "Faim le soir" },
-        { mois: 3, theme: "Sentiments", fr: "soif", arabe: "عَطَش", latin: "3ta9", phrase_latin: "3ta9 bzzaf", phrase_fr: "Très soif" },
-        { mois: 3, theme: "Sentiments", fr: "ennui", arabe: "مَلَل", latin: "malal", phrase_latin: "Malal f dar", phrase_fr: "Ennui à la maison" },
-        { mois: 3, theme: "Corps", fr: "tête", arabe: "رَّاس", latin: "rras", phrase_latin: "Rras yawja3ni", phrase_fr: "Ma tête me fait mal" },
-        { mois: 3, theme: "Corps", fr: "œil", arabe: "عَيْن", latin: "3in", phrase_latin: "3in zwina", phrase_fr: "Bel œil" },
-        { mois: 3, theme: "Corps", fr: "nez", arabe: "مْنَخَّر", latin: "mna5er", phrase_latin: "Mna5er sghir", phrase_fr: "Petit nez" },
-        { mois: 3, theme: "Corps", fr: "bouche", arabe: "فُم", latin: "foum", phrase_latin: "Foum kbir", phrase_fr: "Grande bouche" },
-        { mois: 3, theme: "Corps", fr: "main", arabe: "يَد", latin: "yd", phrase_latin: "Yd yamna", phrase_fr: "Main droite" },
-        { mois: 3, theme: "Corps", fr: "pied", arabe: "رِّجْل", latin: "rejl", phrase_latin: "Rejl yusra", phrase_fr: "Pied gauche" },
-        { mois: 3, theme: "Corps", fr: "cœur", arabe: "قَلْب", latin: "9lb", phrase_latin: "9lb kbir", phrase_fr: "Grand cœur" },
-        { mois: 3, theme: "Corps", fr: "ventre", arabe: "كَرْش", latin: "krich", phrase_latin: "Krich yawja3ni", phrase_fr: "Mon ventre me fait mal" },
-        { mois: 3, theme: "Corps", fr: "dos", arabe: "ضَّهْر", latin: "ddahr", phrase_latin: "Ddahr s7i7", phrase_fr: "Dos en bonne santé" },
-        { mois: 3, theme: "Corps", fr: "bras", arabe: "دْرَاع", latin: "dra3", phrase_latin: "Dra3 qwi", phrase_fr: "Bras fort" },
-    ];
-
-    // ---------- DONNÉES DU MOIS 4 ----------
-    const vocabulaireMois4 = [
-        // Santé (20 mots)
-        { mois: 4, theme: "Santé", fr: "médecin", arabe: "طْبِيب", latin: "tbib", phrase_latin: "Mchit l tbib", phrase_fr: "Je suis allé chez le médecin" },
-        { mois: 4, theme: "Santé", fr: "infirmier", arabe: "مُمَرِّض", latin: "moumarrid", phrase_latin: "Moumarrid 3tani dwa", phrase_fr: "L'infirmier m'a donné un médicament" },
-        { mois: 4, theme: "Santé", fr: "hôpital", arabe: "سْبِيطَار", latin: "sbitar", phrase_latin: "Sbitar qrib", phrase_fr: "L'hôpital est proche" },
-        { mois: 4, theme: "Santé", fr: "pharmacie", arabe: "فَرْمَاسْيَا", latin: "farmasiya", phrase_latin: "Farmasiya f tri9", phrase_fr: "La pharmacie sur la route" },
-        { mois: 4, theme: "Santé", fr: "médicament", arabe: "دْوَاء", latin: "dwa", phrase_latin: "Chrit dwa", phrase_fr: "J'ai acheté un médicament" },
-        { mois: 4, theme: "Santé", fr: "maladie", arabe: "مَرَض", latin: "marad", phrase_latin: "3endi marad", phrase_fr: "J'ai une maladie" },
-        { mois: 4, theme: "Santé", fr: "fièvre", arabe: "سْخَانَة", latin: "skhana", phrase_latin: "3endi skhana", phrase_fr: "J'ai de la fièvre" },
-        { mois: 4, theme: "Santé", fr: "toux", arabe: "كُحَّة", latin: "ko7a", phrase_latin: "3endi ko7a", phrase_fr: "J'ai de la toux" },
-        { mois: 4, theme: "Santé", fr: "rhume", arabe: "زُكَّام", latin: "zkkam", phrase_latin: "Zkkam kayz3em", phrase_fr: "Le rhume me gêne" },
-        { mois: 4, theme: "Santé", fr: "douleur", arabe: "وْجَع", latin: "wja3", phrase_latin: "3endi wja3 f rassi", phrase_fr: "J'ai mal à la tête" },
-        { mois: 4, theme: "Santé", fr: "piqûre", arabe: "حِقْنَة", latin: "7a9na", phrase_latin: "Dert 7a9na", phrase_fr: "J'ai fait une piqûre" },
-        { mois: 4, theme: "Santé", fr: "prise de sang", arabe: "تَحْلِيل دَم", latin: "tahlil dem", phrase_latin: "Dert tahlil dem", phrase_fr: "J'ai fait une prise de sang" },
-        { mois: 4, theme: "Santé", fr: "radio", arabe: "رَادْيُو", latin: "radyo", phrase_latin: "Dert radyo", phrase_fr: "J'ai passé une radio" },
-        { mois: 4, theme: "Santé", fr: "ambulance", arabe: "إِسْعَاف", latin: "is3af", phrase_latin: "Is3af jaw b survit", phrase_fr: "L'ambulance est arrivée vite" },
-        { mois: 4, theme: "Santé", fr: "urgences", arabe: "مُسْتَعْجَلَات", latin: "mosta3jalat", phrase_latin: "Mchit l mosta3jalat", phrase_fr: "Je suis allé aux urgences" },
-        { mois: 4, theme: "Santé", fr: "dentiste", arabe: "طْبِيب سْنَان", latin: "tbib snan", phrase_latin: "Mchit l tbib snan", phrase_fr: "Je suis allé chez le dentiste" },
-        { mois: 4, theme: "Santé", fr: "opération", arabe: "عَمَلِيَّة", latin: "3amaliya", phrase_latin: "Dert 3amaliya", phrase_fr: "J'ai eu une opération" },
-        { mois: 4, theme: "Santé", fr: "guérison", arabe: "شِفَاء", latin: "chifa2", phrase_latin: "Chifa2 b slam", phrase_fr: "Guérison rapide" },
-        { mois: 4, theme: "Santé", fr: "repos", arabe: "رَاحَة", latin: "ra7a", phrase_latin: "7tajt l ra7a", phrase_fr: "J'avais besoin de repos" },
-        { mois: 4, theme: "Santé", fr: "béquilles", arabe: "عَكَّازَات", latin: "3akkazat", phrase_latin: "Kanduz b 3akkazat", phrase_fr: "Je marche avec des béquilles" },
-        // Métiers (20 mots)
-        { mois: 4, theme: "Métiers", fr: "enseignant", arabe: "أُسْتَاذ", latin: "ostad", phrase_latin: "Ostad dialna mzyan", phrase_fr: "Notre enseignant est bon" },
-        { mois: 4, theme: "Métiers", fr: "ingénieur", arabe: "مُهَنْدِس", latin: "mouhandis", phrase_latin: "Baba mouhandis", phrase_fr: "Mon père est ingénieur" },
-        { mois: 4, theme: "Métiers", fr: "pompier", arabe: "رَجَّال دْلحْرِيق", latin: "rejjal d l7ri9", phrase_latin: "Rejjal d l7ri9 kaytfi l7ri9", phrase_fr: "Le pompier éteint le feu" },
-        { mois: 4, theme: "Métiers", fr: "policier", arabe: "شُرْطِي", latin: "chorṭi", phrase_latin: "Chorṭi kaywe9ef f tri9", phrase_fr: "Le policier s'arrête sur la route" },
-        { mois: 4, theme: "Métiers", fr: "boulanger", arabe: "خَبَّاز", latin: "khabbaz", phrase_latin: "Khabbaz kaydir khobz", phrase_fr: "Le boulanger fait du pain" },
-        { mois: 4, theme: "Métiers", fr: "boucher", arabe: "جَزَّار", latin: "jazzar", phrase_latin: "Jazzar kaybi3 l7em", phrase_fr: "Le boucher vend de la viande" },
-        { mois: 4, theme: "Métiers", fr: "poissonnier", arabe: "حُوتِي", latin: "7outi", phrase_latin: "7outi kaybi3 7out", phrase_fr: "Le poissonnier vend du poisson" },
-        { mois: 4, theme: "Métiers", fr: "marchand de légumes", arabe: "خُضَارِي", latin: "khodari", phrase_latin: "Khodari kaybi3 lkhodar", phrase_fr: "Le marchand de légumes vend des légumes" },
-        { mois: 4, theme: "Métiers", fr: "coiffeur", arabe: "حَلَّاق", latin: "7alla9", phrase_latin: "Mchit l 7alla9", phrase_fr: "Je suis allé chez le coiffeur" },
-        { mois: 4, theme: "Métiers", fr: "chauffeur", arabe: "سَوَّاق", latin: "sawe9", phrase_latin: "Sawe9 dial taksi", phrase_fr: "Le chauffeur de taxi" },
-        { mois: 4, theme: "Métiers", fr: "mécanicien", arabe: "مِيكَانِيكِي", latin: "mikaniki", phrase_latin: "Mikaniki kayṣelleḥ tomobil", phrase_fr: "Le mécanicien répare la voiture" },
-        { mois: 4, theme: "Métiers", fr: "électricien", arabe: "كَهْرَبِي", latin: "kahrabi", phrase_latin: "Kahrabi kayṣelleḥ dawi", phrase_fr: "L'électricien répare les lumières" },
-        { mois: 4, theme: "Métiers", fr: "plombier", arabe: "سَبَّاك", latin: "sabbak", phrase_latin: "Sabbak kayṣelleḥ lma", phrase_fr: "Le plombier répare l'eau" },
-        { mois: 4, theme: "Métiers", fr: "peintre", arabe: "رَسَّام", latin: "rassam", phrase_latin: "Rassam kayṣebbgh dar", phrase_fr: "Le peintre peint la maison" },
-        { mois: 4, theme: "Métiers", fr: "maçon", arabe: "بَنَّاي", latin: "bannay", phrase_latin: "Bannay kaybni dar", phrase_fr: "Le maçon construit une maison" },
-        { mois: 4, theme: "Métiers", fr: "jardinier", arabe: "جَرْدِينِي", latin: "jardini", phrase_latin: "Jardini kayṣweb jardin", phrase_fr: "Le jardinier aménage le jardin" },
-        { mois: 4, theme: "Métiers", fr: "couturier", arabe: "خَيَّاط", latin: "khayyat", phrase_latin: "Khayyat kaykhyeṭ lḥwayej", phrase_fr: "Le couturier coud les vêtements" },
-        { mois: 4, theme: "Métiers", fr: "bijoutier", arabe: "صَايَغ", latin: "ṣayegh", phrase_latin: "Ṣayegh kaybi3 lmsa8", phrase_fr: "Le bijoutier vend des bijoux" },
-        { mois: 4, theme: "Métiers", fr: "menuisier", arabe: "نَجَّار", latin: "najjar", phrase_latin: "Najjar kayṣna3 l'athath", phrase_fr: "Le menuisier fabrique des meubles" },
-        { mois: 4, theme: "Métiers", fr: "ferrailleur", arabe: "حَدَّاد", latin: "7addad", phrase_latin: "7addad kayṣna3 l7did", phrase_fr: "Le ferrailleur travaille le fer" },
-        // Loisirs (20 mots)
-        { mois: 4, theme: "Loisirs", fr: "sport", arabe: "رِيَاضَة", latin: "riyada", phrase_latin: "Kanmārs riyada", phrase_fr: "Je fais du sport" },
-        { mois: 4, theme: "Loisirs", fr: "football", arabe: "كُورَة", latin: "kora", phrase_latin: "Nl3bo kora", phrase_fr: "On joue au foot" },
-        { mois: 4, theme: "Loisirs", fr: "basketball", arabe: "كُورَة سَلَّة", latin: "kora salla", phrase_latin: "Nl3bo kora salla", phrase_fr: "On joue au basket" },
-        { mois: 4, theme: "Loisirs", fr: "natation", arabe: "عُوم", latin: "3oum", phrase_latin: "Kan3oum f bsin", phrase_fr: "Je nage dans la piscine" },
-        { mois: 4, theme: "Loisirs", fr: "vélo", arabe: "بِيشِيكْلِيط", latin: "bichiklita", phrase_latin: "Kanl3eb b bichiklita", phrase_fr: "Je fais du vélo" },
-        { mois: 4, theme: "Loisirs", fr: "randonnée", arabe: "مَشْي", latin: "mechi", phrase_latin: "Mechina f l'3achiya", phrase_fr: "On s'est promenés le soir" },
-        { mois: 4, theme: "Loisirs", fr: "jeu de société", arabe: "لْعْبَة د الطَّاوْلَة", latin: "l3ba d tawla", phrase_latin: "Nl3bo l3ba d tawla", phrase_fr: "On joue à un jeu de société" },
-        { mois: 4, theme: "Loisirs", fr: "cinéma", arabe: "سِينِيمَا", latin: "sinima", phrase_latin: "Mchina l sinima", phrase_fr: "On est allés au cinéma" },
-        { mois: 4, theme: "Loisirs", fr: "théâtre", arabe: "مَسْرَح", latin: "masra7", phrase_latin: "Chofna masra7iya", phrase_fr: "On a vu une pièce de théâtre" },
-        { mois: 4, theme: "Loisirs", fr: "concert", arabe: "حَفْلَة", latin: "7afla", phrase_latin: "7afla d l'musiqa", phrase_fr: "Un concert de musique" },
-        { mois: 4, theme: "Loisirs", fr: "musique", arabe: "مُوسِيقَى", latin: "musiqa", phrase_latin: "Kanṣefṭ l musiqa", phrase_fr: "J'écoute de la musique" },
-        { mois: 4, theme: "Loisirs", fr: "danse", arabe: "رْقَص", latin: "rqas", phrase_latin: "Kanrqso f l'3ors", phrase_fr: "On danse au mariage" },
-        { mois: 4, theme: "Loisirs", fr: "pêche", arabe: "صِّيد", latin: "ṣyd", phrase_latin: "Mchina nṣydu", phrase_fr: "On est allés à la pêche" },
-        { mois: 4, theme: "Loisirs", fr: "camping", arabe: "كَمْبَانِي", latin: "kambani", phrase_latin: "Derna kambani", phrase_fr: "On a fait du camping" },
-        { mois: 4, theme: "Loisirs", fr: "photographie", arabe: "فُوتُو", latin: "foto", phrase_latin: "Kanakhod foto", phrase_fr: "Je prends des photos" },
-        { mois: 4, theme: "Loisirs", fr: "lecture", arabe: "قْرَايَة", latin: "qraya", phrase_latin: "Kanqra ktab", phrase_fr: "Je lis un livre" },
-        { mois: 4, theme: "Loisirs", fr: "écriture", arabe: "كْتَابَة", latin: "ktaba", phrase_latin: "Kankteb 9iṣa", phrase_fr: "J'écris une histoire" },
-        { mois: 4, theme: "Loisirs", fr: "dessin", arabe: "رْسْم", latin: "rasm", phrase_latin: "Kanrsem", phrase_fr: "Je dessine" },
-        { mois: 4, theme: "Loisirs", fr: "bricolage", arabe: "صْنَع", latin: "ṣna3", phrase_latin: "Kanṣna3 7wayej", phrase_fr: "Je fabrique des choses" },
-        { mois: 4, theme: "Loisirs", fr: "jardinage", arabe: "فْلَاحَة", latin: "fla7a", phrase_latin: "Kanfla7 f jardin", phrase_fr: "Je jardine" },
-        // Nourriture (20 mots)
-        { mois: 4, theme: "Nourriture", fr: "tajine", arabe: "طَاجِين", latin: "ṭajin", phrase_latin: "Klat ṭajin d l7em", phrase_fr: "Elle a mangé un tajine de viande" },
-        { mois: 4, theme: "Nourriture", fr: "couscous", arabe: "كُسْكُس", latin: "koskos", phrase_latin: "Nhebb koskos", phrase_fr: "J'aime le couscous" },
-        { mois: 4, theme: "Nourriture", fr: "pastilla", arabe: "بَسْطِيلَة", latin: "basṭila", phrase_latin: "Basṭila b ḍḍaj", phrase_fr: "Pastilla au poulet" },
-        { mois: 4, theme: "Nourriture", fr: "harira", arabe: "حَرِيرَة", latin: "ḥarira", phrase_latin: "Nchrebu ḥarira f rmeḍan", phrase_fr: "On boit de la harira pendant le ramadan" },
-        { mois: 4, theme: "Nourriture", fr: "chorba", arabe: "شُرْبَة", latin: "chorba", phrase_latin: "Chorba sḫouna", phrase_fr: "Soupe chaude" },
-        { mois: 4, theme: "Nourriture", fr: "poisson", arabe: "حُوت", latin: "7out", phrase_latin: "7out mchwi", phrase_fr: "Poisson grillé" },
-        { mois: 4, theme: "Nourriture", fr: "merguez", arabe: "مَرْقَاز", latin: "mergaz", phrase_latin: "Mergaz f l'mechwi", phrase_fr: "Merguez au barbecue" },
-        { mois: 4, theme: "Nourriture", fr: "brochette", arabe: "بْرُوشِيط", latin: "brouchit", phrase_latin: "Brouchit d l7em", phrase_fr: "Brochette de viande" },
-        { mois: 4, theme: "Nourriture", fr: "thé", arabe: "أَتَاي", latin: "atay", phrase_latin: "Atay b n3na3", phrase_fr: "Thé à la menthe" },
-        { mois: 4, theme: "Nourriture", fr: "café", arabe: "قَهْوَة", latin: "qahwa", phrase_latin: "Nchreb qahwa f ṣbeḥ", phrase_fr: "Je bois du café le matin" },
-        { mois: 4, theme: "Nourriture", fr: "jus", arabe: "عْصِير", latin: "3ṣir", phrase_latin: "3ṣir limoun", phrase_fr: "Jus de citron" },
-        { mois: 4, theme: "Nourriture", fr: "lben", arabe: "لْبَنْ", latin: "lben", phrase_latin: "Nchreb lben", phrase_fr: "Je bois du lben (lait fermenté)" },
-        { mois: 4, theme: "Nourriture", fr: "raïb", arabe: "رَايِب", latin: "rayeb", phrase_latin: "Rayeb mzyan", phrase_fr: "Le raïb est bon (lait caillé)" },
-        { mois: 4, theme: "Nourriture", fr: "msemen", arabe: "مْسَمَّن", latin: "msemen", phrase_latin: "Msemen b l'3sel", phrase_fr: "Msemen au miel" },
-        { mois: 4, theme: "Nourriture", fr: "baghrir", arabe: "بَغْرِير", latin: "baghrir", phrase_latin: "Baghrir b zebda", phrase_fr: "Baghrir (crêpes à mille trous) au beurre" },
-        { mois: 4, theme: "Nourriture", fr: "harcha", arabe: "حَرْشَة", latin: "ḥarcha", phrase_latin: "Ḥarcha semoule", phrase_fr: "Galette de semoule" },
-        { mois: 4, theme: "Nourriture", fr: "briouat", arabe: "بْرِيُوَات", latin: "briwat", phrase_latin: "Briwat b loz", phrase_fr: "Briouates aux amandes" },
-        { mois: 4, theme: "Nourriture", fr: "chebakia", arabe: "شْبَاكِيَة", latin: "chebakiya", phrase_latin: "Chebakiya f rmeḍan", phrase_fr: "Chebakia pendant le ramadan" },
-        { mois: 4, theme: "Nourriture", fr: "sellou", arabe: "سَلُّو", latin: "sellou", phrase_latin: "Sellou mzyan", phrase_fr: "Sellou (gâteau de semoule et amandes)" },
-        { mois: 4, theme: "Nourriture", fr: "ghriba", arabe: "غْرِيبَة", latin: "ghriba", phrase_latin: "Ghriba tayba", phrase_fr: "Ghriba (sablé marocain)" }
-    ];
-
-    // Tous les mots pour la révision
-    const tousLesMots = [...vocabulaireMois1, ...vocabulaireMois2, ...vocabulaireMois3, ...vocabulaireMois4];
-
-    // Dialogues du mois 4
-    const dialogues = [
-        {
-            titre: "Chez le médecin",
-            personnages: ["Patient", "Médecin"],
-            repliques: [
-                { role: "Patient", latin: "Smehli, 3endi wja3 f kerchi.", francais: "Pardon, j'ai mal au ventre.", arabe: "سْمَحْلِي، عَنْدِي وْجَع فْكَرْشِي" },
-                { role: "Médecin", latin: "Mtal3 lila wach kla hwayej?", francais: "Depuis quand, qu'as-tu mangé?", arabe: "مْتَالْ لِيلَة وَاش كْلَا حْوَاج؟" },
-                { role: "Patient", latin: "Klit l'berra.", francais: "J'ai mangé dehors.", arabe: "كْلِيت لْبَرَّا" },
-                { role: "Médecin", latin: "Ghadi n3tik dwa, tchoufo f khir.", francais: "Je vais te donner un médicament, à bientôt.", arabe: "غَادِي نْعْطِيك دْوَاء، تْشُوفُو فْخِير" }
-            ]
-        },
-        {
-            titre: "Parler des métiers",
-            personnages: ["Enfant", "Papa"],
-            repliques: [
-                { role: "Enfant", latin: "Baba, chno khdamti?", francais: "Papa, quel est ton métier?", arabe: "بَابَا، شْنُو خْدَامْتِي؟" },
-                { role: "Papa", latin: "Ana mouhandis. Kanakhdem f chrika.", francais: "Je suis ingénieur. Je travaille dans une entreprise.", arabe: "أَنَا مُهَنْدِس. كَانَخْدَم فْشْرِيكَة" },
-                { role: "Enfant", latin: "W mama, chno katkhdem?", francais: "Et maman, que fait-elle?", arabe: "و مَامَا، شْنُو كَاتْخْدَم؟" },
-                { role: "Papa", latin: "Hiya ṭbiba f sbitar.", francais: "Elle est médecin à l'hôpital.", arabe: "هِيَة طْبِيبَة فْسْبِيطَار" }
-            ]
-        },
-        {
-            titre: "Projet de loisir",
-            personnages: ["Amine", "Kawtar"],
-            repliques: [
-                { role: "Amine", latin: "Nmshiw nl3bo kora?", francais: "On va jouer au foot?", arabe: "نْمْشِيو نْلْعَبُو كُورَة؟" },
-                { role: "Kawtar", latin: "La, ana bghit nmshi l bsin.", francais: "Non, je veux aller à la piscine.", arabe: "لَا، أَنَا بْغِيت نْمْشِي لْبْسِين" },
-                { role: "Amine", latin: "Wakha, nmshiw l bsin. Ghadi n3oumou.", francais: "D'accord, allons à la piscine. On nagera.", arabe: "وَاخَا، نْمْشِيو لْبْسِين. غَادِي نْعُومُو" }
-            ]
-        },
-        {
-            titre: "Au restaurant",
-            personnages: ["Client", "Serveur"],
-            repliques: [
-                { role: "Client", latin: "Bghit nkul ṭajin d l7em.", francais: "Je veux manger un tajine de viande.", arabe: "بْغِيت نْكُل طَاجِين دْ لْحَم" },
-                { role: "Serveur", latin: "Wach bghiti ma?", francais: "Veux-tu de l'eau?", arabe: "وَاش بْغِيتِي مَاء؟" },
-                { role: "Client", latin: "Ih, w atay.", francais: "Oui, et du thé.", arabe: "إيْه، و أَتَاي" },
-                { role: "Serveur", latin: "Tfaddel, ṭajin sḫoun.", francais: "Voici, tajine chaud.", arabe: "تْفَضَّل، طَاجِين سْخُون" }
-            ]
-        },
-        {
-            titre: "À la pharmacie",
-            personnages: ["Client", "Pharmacien"],
-            repliques: [
-                { role: "Client", latin: "3ndek dwa l ṣdā3?", francais: "Avez-vous un médicament contre le mal de tête?", arabe: "عَنْدَك دْوَاء ل صْدَاع؟" },
-                { role: "Pharmacien", latin: "Ih, hak hada. Tchoufo f khir.", francais: "Oui, tenez celui-ci. À bientôt.", arabe: "إيْه، هَاك هَادَا. تْشُوفُو فْخِير" },
-                { role: "Client", latin: "Chokran bzzaf.", francais: "Merci beaucoup.", arabe: "شُكْرَان بْزَّاف" }
-            ]
-        }
-    ];
-
-    // 20 nouveaux verbes pour le mois 4
-    const verbes = [
-        { verbe: "soigner", racine: "3alej",
-          present: { ana: "kan3alej", nta: "kat3alej", houwa: "kay3alej", hna: "kan3alju", ntuma: "kat3alju", houma: "kay3alju" },
-          passe: { ana: "3alejt", nta: "3alejti", houwa: "3alej", hna: "3alejna", ntuma: "3alejtu", houma: "3alju" },
-          futur: { ana: "ghadi n3alej", nta: "ghadi t3alej", houwa: "ghadi y3alej", hna: "ghadi n3alju", ntuma: "ghadi t3alju", houma: "ghadi y3alju" } },
-        { verbe: "guérir", racine: "chfa",
-          present: { ana: "kanachfa", nta: "katachfa", houwa: "kayachfa", hna: "kanachfaw", ntuma: "katachfaw", houma: "kayachfaw" },
-          passe: { ana: "chfit", nta: "chfiti", houwa: "chfa", hna: "chfina", ntuma: "chfitu", houma: "chfaw" },
-          futur: { ana: "ghadi nachfa", nta: "ghadi tachfa", houwa: "ghadi yachfa", hna: "ghadi nachfaw", ntuma: "ghadi tachfaw", houma: "ghadi yachfaw" } },
-        { verbe: "travailler", racine: "khdem",
-          present: { ana: "kanakhdem", nta: "katakhdem", houwa: "kayakhdem", hna: "kanakhdmu", ntuma: "katakhdmu", houma: "kayakhdmu" },
-          passe: { ana: "khdemt", nta: "khdemti", houwa: "khdem", hna: "khdemna", ntuma: "khdemtu", houma: "khdmu" },
-          futur: { ana: "ghadi nakhdem", nta: "ghadi takhdem", houwa: "ghadi yakhdem", hna: "ghadi nakhdmu", ntuma: "ghadi takhdmu", houma: "ghadi yakhdmu" } },
-        { verbe: "vendre", racine: "bi3",
-          present: { ana: "kanabi3", nta: "katabi3", houwa: "kayabi3", hna: "kanabi3u", ntuma: "katabi3u", houma: "kayabi3u" },
-          passe: { ana: "bi3t", nta: "bi3ti", houwa: "ba3", hna: "bi3na", ntuma: "bi3tu", houma: "ba3u" },
-          futur: { ana: "ghadi nabi3", nta: "ghadi tabi3", houwa: "ghadi yabi3", hna: "ghadi nabi3u", ntuma: "ghadi tabi3u", houma: "ghadi yabi3u" } },
-        { verbe: "acheter", racine: "chra",
-          present: { ana: "kanachri", nta: "katachri", houwa: "kayachri", hna: "kanachriw", ntuma: "katachriw", houma: "kayachriw" },
-          passe: { ana: "chrit", nta: "chriti", houwa: "chra", hna: "chrina", ntuma: "chritu", houma: "chraw" },
-          futur: { ana: "ghadi nachri", nta: "ghadi tachri", houwa: "ghadi yachri", hna: "ghadi nachriw", ntuma: "ghadi tachriw", houma: "ghadi yachriw" } },
-        { verbe: "jouer", racine: "l3eb",
-          present: { ana: "kanal3eb", nta: "katal3eb", houwa: "kayal3eb", hna: "kanal3bu", ntuma: "katal3bu", houma: "kayal3bu" },
-          passe: { ana: "l3ebt", nta: "l3ebti", houwa: "l3eb", hna: "l3ebna", ntuma: "l3ebtu", houma: "l3ebu" },
-          futur: { ana: "ghadi nal3eb", nta: "ghadi tal3eb", houwa: "ghadi yal3eb", hna: "ghadi nal3bu", ntuma: "ghadi tal3bu", houma: "ghadi yal3bu" } },
-        { verbe: "nager", racine: "3oum",
-          present: { ana: "kana3oum", nta: "kata3oum", houwa: "kaya3oum", hna: "kana3oumu", ntuma: "kata3oumu", houma: "kaya3oumu" },
-          passe: { ana: "3omt", nta: "3omti", houwa: "3am", hna: "3omna", ntuma: "3omtu", houma: "3amu" },
-          futur: { ana: "ghadi na3oum", nta: "ghadi ta3oum", houwa: "ghadi ya3oum", hna: "ghadi na3oumu", ntuma: "ghadi ta3oumu", houma: "ghadi ya3oumu" } },
-        { verbe: "courir", racine: "jri",
-          present: { ana: "kanajri", nta: "katajri", houwa: "kayajri", hna: "kanajriw", ntuma: "katajriw", houma: "kayajriw" },
-          passe: { ana: "jrit", nta: "jriti", houwa: "jra", hna: "jrina", ntuma: "jritu", houma: "jraw" },
-          futur: { ana: "ghadi najri", nta: "ghadi tajri", houwa: "ghadi yajri", hna: "ghadi najriw", ntuma: "ghadi tajriw", houma: "ghadi yajriw" } },
-        { verbe: "danser", racine: "rqes",
-          present: { ana: "kanarqes", nta: "katarqes", houwa: "kayarqes", hna: "kanarqsu", ntuma: "katarqsu", houma: "kayarqsu" },
-          passe: { ana: "rqest", nta: "rqesti", houwa: "rqes", hna: "rqesna", ntuma: "rqestu", houma: "rqsu" },
-          futur: { ana: "ghadi narqes", nta: "ghadi tarqes", houwa: "ghadi yarqes", hna: "ghadi narqsu", ntuma: "ghadi tarqsu", houma: "ghadi yarqsu" } },
-        { verbe: "chanter", racine: "ghna",
-          present: { ana: "kanaghni", nta: "kataghni", houwa: "kayaghni", hna: "kanaghniw", ntuma: "kataghniw", houma: "kayaghniw" },
-          passe: { ana: "ghneit", nta: "ghneiti", houwa: "ghna", hna: "ghneina", ntuma: "ghneitu", houma: "ghnaw" },
-          futur: { ana: "ghadi naghni", nta: "ghadi taghni", houwa: "ghadi yaghni", hna: "ghadi naghniw", ntuma: "ghadi taghniw", houma: "ghadi yaghniw" } },
-        { verbe: "lire", racine: "qra",
-          present: { ana: "kanaqra", nta: "kataqra", houwa: "kayaqra", hna: "kanaqraw", ntuma: "kataqraw", houma: "kayaqraw" },
-          passe: { ana: "qrit", nta: "qriti", houwa: "qra", hna: "qrina", ntuma: "qritu", houma: "qraw" },
-          futur: { ana: "ghadi naqra", nta: "ghadi taqra", houwa: "ghadi yaqra", hna: "ghadi naqraw", ntuma: "ghadi taqraw", houma: "ghadi yaqraw" } },
-        { verbe: "écrire", racine: "kteb",
-          present: { ana: "kanakteb", nta: "katakteb", houwa: "kayakteb", hna: "kanaktbu", ntuma: "kataktbu", houma: "kayaktbu" },
-          passe: { ana: "ktebt", nta: "ktebti", houwa: "kteb", hna: "ktebna", ntuma: "ktebtu", houma: "ktebu" },
-          futur: { ana: "ghadi nakteb", nta: "ghadi takteb", houwa: "ghadi yakteb", hna: "ghadi naktbu", ntuma: "ghadi taktbu", houma: "ghadi yaktbu" } },
-        { verbe: "dessiner", racine: "rsem",
-          present: { ana: "kanarsem", nta: "katarsem", houwa: "kayarsem", hna: "kanarsmu", ntuma: "katarsmu", houma: "kayarsmu" },
-          passe: { ana: "rsemt", nta: "rsemti", houwa: "rsem", hna: "rsemna", ntuma: "rsemtu", houma: "rsmu" },
-          futur: { ana: "ghadi narsem", nta: "ghadi tarsem", houwa: "ghadi yarsem", hna: "ghadi narsmu", ntuma: "ghadi tarsmu", houma: "ghadi yarsmu" } },
-        { verbe: "photographier", racine: "ṣwr",
-          present: { ana: "kanaṣwer", nta: "kataṣwer", houwa: "kayaṣwer", hna: "kanaṣwru", ntuma: "kataṣwru", houma: "kayaṣwru" },
-          passe: { ana: "ṣwert", nta: "ṣwerti", houwa: "ṣwer", hna: "ṣwerna", ntuma: "ṣwertu", houma: "ṣweru" },
-          futur: { ana: "ghadi naṣwer", nta: "ghadi taṣwer", houwa: "ghadi yaṣwer", hna: "ghadi naṣwru", ntuma: "ghadi taṣwru", houma: "ghadi yaṣwru" } },
-        { verbe: "cuisiner", racine: "ṭiyeb",
-          present: { ana: "kanaṭiyeb", nta: "kataṭiyeb", houwa: "kayaṭiyeb", hna: "kanaṭiybu", ntuma: "kataṭiybu", houma: "kayaṭiybu" },
-          passe: { ana: "ṭiyebt", nta: "ṭiyebti", houwa: "ṭiyeb", hna: "ṭiyebna", ntuma: "ṭiyebtu", houma: "ṭiybu" },
-          futur: { ana: "ghadi naṭiyeb", nta: "ghadi taṭiyeb", houwa: "ghadi yaṭiyeb", hna: "ghadi naṭiybu", ntuma: "ghadi taṭiybu", houma: "ghadi yaṭiybu" } },
-        { verbe: "manger", racine: "kla",
-          present: { ana: "kanakul", nta: "katakul", houwa: "kayakul", hna: "kanaklu", ntuma: "kataklu", houma: "kayaklu" },
-          passe: { ana: "klit", nta: "kliti", houwa: "kla", hna: "klina", ntuma: "klitu", houma: "klaw" },
-          futur: { ana: "ghadi nakul", nta: "ghadi takul", houwa: "ghadi yakul", hna: "ghadi naklu", ntuma: "ghadi taklu", houma: "ghadi yaklu" } },
-        { verbe: "boire", racine: "sreb",
-          present: { ana: "kanachreb", nta: "katachreb", houwa: "kayachreb", hna: "kanachrbu", ntuma: "katachrbu", houma: "kayachrbu" },
-          passe: { ana: "srebt", nta: "srebti", houwa: "sreb", hna: "srebna", ntuma: "srebtu", houma: "srebu" },
-          futur: { ana: "ghadi nachreb", nta: "ghadi tachreb", houwa: "ghadi yachreb", hna: "ghadi nachrbu", ntuma: "ghadi tachrbu", houma: "ghadi yachrbu" } },
-        { verbe: "préparer", racine: "wellef",
-          present: { ana: "kanawellef", nta: "katawellef", houwa: "kayawellef", hna: "kanawellfu", ntuma: "katawellfu", houma: "kayawellfu" },
-          passe: { ana: "wellft", nta: "wellfti", houwa: "wellef", hna: "wellefna", ntuma: "wellftu", houma: "wellfu" },
-          futur: { ana: "ghadi nawellef", nta: "ghadi tawellef", houwa: "ghadi yawellef", hna: "ghadi nawellfu", ntuma: "ghadi tawellfu", houma: "ghadi yawellfu" } },
-        { verbe: "essayer", racine: "jarreb",
-          present: { ana: "kanajarreb", nta: "katajarreb", houwa: "kayajarreb", hna: "kanajarrbu", ntuma: "katajarrbu", houma: "kayajarrbu" },
-          passe: { ana: "jarrebt", nta: "jarrebti", houwa: "jarreb", hna: "jarrebna", ntuma: "jarrebtu", houma: "jarrbu" },
-          futur: { ana: "ghadi najarreb", nta: "ghadi tajarreb", houwa: "ghadi yajarreb", hna: "ghadi najarrbu", ntuma: "ghadi tajarrbu", houma: "ghadi yajarrbu" } }
-    ];
-
-    // ---------- GESTION DE LA PROGRESSION ----------
-    let leçonsTerminées = JSON.parse(localStorage.getItem('darija_mois4_rouge')) || [];
-
-    function updateProgressBar() {
-        const totalLecons = 4;
-        const appris = leçonsTerminées.filter(id => id.startsWith('4-')).length;
-        const pourcentage = (appris / totalLecons) * 100;
-        document.getElementById('progressFill').style.width = pourcentage + '%';
-        document.getElementById('progressText').textContent = appris + '/' + totalLecons + ' leçons terminées';
-    }
-
-    function terminerLecon(mois, theme) {
-        const id = `${mois}-${theme}`;
-        if (!leçonsTerminées.includes(id)) {
-            leçonsTerminées.push(id);
-            localStorage.setItem('darija_mois4_rouge', JSON.stringify(leçonsTerminées));
-        }
-        updateProgressBar();
-        afficherMessage("Bravo ! Leçon terminée ! 🌟");
-        afficherOnglet('lecons');
-    }
-
-    function afficherMessage(msg) {
-        const contenu = document.getElementById('contenu');
-        const divMsg = document.createElement('div');
-        divMsg.className = 'message-felicitation';
-        divMsg.innerText = msg;
-        contenu.prepend(divMsg);
-        setTimeout(() => divMsg.remove(), 3000);
-    }
-
-    // ---------- AFFICHAGE ----------
-    function afficherAccueil() {
-        const contenu = document.getElementById('contenu');
-        const totalLecons = 4;
-        const appris = leçonsTerminées.filter(id => id.startsWith('4-')).length;
-        const progressPercent = (appris / totalLecons) * 100;
-        
-        contenu.innerHTML = `
-            <h2>🏠 Mois 4 : Santé, Métiers, Loisirs, Nourriture</h2>
-            <p style="font-size:1.5rem;">Tu as terminé <strong style="color:#b71c1c;">${appris}/${totalLecons}</strong> leçons du mois 4.</p>
-            <p>Chaque mot a une phrase exemple avec sa traduction.</p>
-            <div style="background:#ffcdd2; padding:20px; border-radius:30px; margin-top:20px;">
-                <h3 style="color:#b71c1c;">📌 Mois 4 : 80 mots, 5 dialogues, 20 nouveaux verbes</h3>
-                <p>Thème couleur : <span style="color:#c62828;font-weight:bold;">rouge ❤️</span></p>
-                <p>Révision : tous les mots des mois 1,2,3,4 sont disponibles dans l'onglet Révision.</p>
+    <!-- Révision -->
+    <div id="content-revision" class="tab-content">
+      <div class="bg-white rounded-2xl shadow-lg p-4 md:p-6">
+        <div id="quiz-container">
+          <div class="text-center mb-4 md:mb-6">
+            <h3 class="text-xl md:text-2xl font-bold text-gray-800">🎯 Quiz de Révision - Mois 4</h3>
+            <p class="text-gray-500 text-sm md:text-base">Testez vos connaissances du Mois 4 !</p>
+          </div>
+          <div class="flex flex-wrap justify-center gap-3 mb-4 md:mb-6">
+            <button id="quiz-btn-vocab" class="px-4 py-2 md:px-6 md:py-3 bg-red-500 text-white rounded-full font-semibold hover:bg-red-600 transition-all">📚 Vocabulaire</button>
+            <button id="quiz-btn-verbes" class="px-4 py-2 md:px-6 md:py-3 bg-orange-500 text-white rounded-full font-semibold hover:bg-orange-600 transition-all">🔤 Verbes</button>
+            <button id="quiz-btn-global" class="px-4 py-2 md:px-6 md:py-3 bg-purple-500 text-white rounded-full font-semibold hover:bg-purple-600 transition-all">🌍 Tous les Mois</button>
+          </div>
+          <div id="quiz-area" class="hidden">
+            <div class="text-center mb-4">
+              <span class="text-gray-500 text-sm">Question <span id="quiz-current">1</span> / <span id="quiz-total">10</span></span>
             </div>
-            <div class="stats-cards">
-                <div class="stat-card">
-                    <span class="stat-icon">📘</span>
-                    <div class="stat-text">
-                        <h4>Leçons</h4>
-                        <p>80 mots à apprendre</p>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <span class="stat-icon">💬</span>
-                    <div class="stat-text">
-                        <h4>Dialogues</h4>
-                        <p>5 conversations</p>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <span class="stat-icon">⚙️</span>
-                    <div class="stat-text">
-                        <h4>Verbes</h4>
-                        <p>20 verbes conjugués</p>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <span class="stat-icon">🔄</span>
-                    <div class="stat-text">
-                        <h4>Révision</h4>
-                        <p>Mois 1-4 disponibles</p>
-                    </div>
-                </div>
+            <div id="quiz-question" class="text-lg md:text-2xl text-center font-bold text-gray-800 mb-4 md:mb-6"></div>
+            <div id="quiz-options" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
+            <div id="quiz-result" class="text-center mt-4 text-lg md:text-xl font-bold hidden"></div>
+            <div class="text-center mt-4 md:mt-6">
+              <button id="next-btn" class="px-4 py-2 md:px-6 md:py-3 bg-red-500 text-white rounded-full font-semibold hover:bg-red-600 transition-all hidden">Suivant →</button>
             </div>
-            ${appris === totalLecons ? `
-            <div style="background:#c8e6c9; border:3px solid #4caf50; padding:20px; border-radius:20px; margin-top:20px; display:flex; align-items:center; gap:15px;">
-                <span style="font-size:3rem;">🎉</span>
-                <div>
-                    <p style="font-size:1.3rem; font-weight:bold; color:#2e7d32;">Félicitations !</p>
-                    <p style="color:#388e3c;">Tu as terminé toutes les leçons du mois 4 !</p>
-                </div>
-            </div>
-            ` : ''}
-        `;
+          </div>
+          <div id="quiz-end" class="hidden text-center">
+            <div class="text-4xl md:text-5xl mb-4">🎉</div>
+            <h3 class="text-xl md:text-2xl font-bold text-gray-800">Quiz terminé !</h3>
+            <p class="text-gray-500 mt-2">Score : <span id="quiz-score">0</span> / <span id="quiz-total-end">10</span></p>
+            <button id="reset-quiz-btn" class="mt-4 px-4 py-2 md:px-6 md:py-3 bg-red-500 text-white rounded-full font-semibold hover:bg-red-600 transition-all">Rejouer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="bg-gray-800 text-white text-center py-4 mt-auto">
+    <p class="text-sm">📚 Apprentissage Darija - Mois 4 | Révision des mois 1, 2, 3, 4</p>
+  </footer>
+
+  <script>
+    // ============================================
+    // DONNÉES - MOIS 4
+    // ============================================
+    var vocabulaire = {
+      sante: [
+        { fr: "médecin", arabe: "طَبِيب", latin: "tabib", phrase_latin: "Tabib mzyan", phrase_fr: "Un bon médecin" },
+        { fr: "hôpital", arabe: "مُسْتَشْفَى", latin: "mustashfa", phrase_latin: "Mustashfa kbir", phrase_fr: "Un grand hôpital" },
+        { fr: "pharmacie", arabe: "صَيْدَلِيَّة", latin: "saydaliya", phrase_latin: "Saydaliya 9riba", phrase_fr: "Une pharmacie proche" },
+        { fr: "médicament", arabe: "دْوَاء", latin: "dwa", phrase_latin: "Dwa l-ras", phrase_fr: "Médicament pour la tête" },
+        { fr: "fièvre", arabe: "حُمَّى", latin: "7umma", phrase_latin: "3ndi 7umma", phrase_fr: "J'ai de la fièvre" },
+        { fr: "toux", arabe: "كْحَالَة", latin: "k7ala", phrase_latin: "3ndi k7ala", phrase_fr: "J'ai de la toux" },
+        { fr: "rhume", arabe: "زْكَام", latin: "zkam", phrase_latin: "3ndi zkam", phrase_fr: "J'ai un rhume" },
+        { fr: "douleur", arabe: "وَجَع", latin: "waja3", phrase_latin: "3ndi waja3", phrase_fr: "J'ai une douleur" },
+        { fr: "piqûre", arabe: "حْقْنَة", latin: "7qna", phrase_latin: "7qna f d-dra3", phrase_fr: "Une piqûre dans le bras" },
+        { fr: "ordonnance", arabe: "وَرْقَة", latin: "warqa", phrase_latin: "Warqa d dwa", phrase_fr: "Une ordonnance" },
+        { fr: "thermomètre", arabe: "تِيرْمُومِيتْر", latin: "tirmumitr", phrase_latin: "Tirmumitr d 7umma", phrase_fr: "Thermomètre de fièvre" },
+        { fr: "bandage", arabe: "ضْمَادَة", latin: "dmada", phrase_latin: "Dmada f rjel", phrase_fr: "Bandage sur la jambe" },
+        { fr: "pansement", arabe: "لَاصِق", latin: "lasiq", phrase_latin: "Lasiq sghir", phrase_fr: "Un petit pansement" },
+        { fr: "vaccin", arabe: "لُقَاح", latin: "lqa7", phrase_latin: "Lqa7 l-atfal", phrase_fr: "Vaccin pour les enfants" },
+        { fr: "analyse", arabe: "تَحْلِيل", latin: "tahlil", phrase_latin: "Tahlil d ddm", phrase_fr: "Analyse de sang" },
+        { fr: "radiographie", arabe: "رَادْيُو", latin: "radyu", phrase_latin: "Radyu l-3dam", phrase_fr: "Radio des os" },
+        { fr: "chirurgien", arabe: "جَرَّاح", latin: "jarra7", phrase_latin: "Jarra7 mzyan", phrase_fr: "Un bon chirurgien" },
+        { fr: "infirmier", arabe: "مُمَرِّض", latin: "mumarriḍ", phrase_latin: "Mumarriḍ f mustashfa", phrase_fr: "Infirmier à l'hôpital" },
+        { fr: "urgence", arabe: "مُسْتَعْجَل", latin: "musta3jel", phrase_latin: "Qism musta3jel", phrase_fr: "Service des urgences" },
+        { fr: "guérir", arabe: "شْفَى", latin: "chfa", phrase_latin: "Chfa bzzaf", phrase_fr: "Guérir complètement" }
+      ],
+      metiers: [
+        { fr: "professeur", arabe: "أُسْتَاذ", latin: "ustad", phrase_latin: "Ustad f madrasa", phrase_fr: "Professeur à l'école" },
+        { fr: "policier", arabe: "شُرْطِي", latin: "shurṭi", phrase_latin: "Shurṭi f tariq", phrase_fr: "Policier dans la rue" },
+        { fr: "pompier", arabe: "إِطْفَائِي", latin: "iṭfa'i", phrase_latin: "Iṭfa'i shuja3", phrase_fr: "Un pompier courageux" },
+        { fr: "boulangère", arabe: "خَبَّازَة", latin: "khabbaza", phrase_latin: "Khabbaza katbi3 khubz", phrase_fr: "Boulangère vend du pain" },
+        { fr: "coiffeur", arabe: "حَلَّاق", latin: "7allaq", phrase_latin: "7allaq kay7llq cha3r", phrase_fr: "Coiffeur coupe les cheveux" },
+        { fr: "mécanicien", arabe: "مِيكَانِيسْيَان", latin: "mikanisyan", phrase_latin: "Mikanisyan kayṣla7 tomobil", phrase_fr: "Mécanicien répare les voitures" },
+        { fr: "vendeur", arabe: "بَيَّاع", latin: "bayya3", phrase_latin: "Bayya3 f hanut", phrase_fr: "Vendeur dans un magasin" },
+        { fr: "agriculteur", arabe: "فَلَّاح", latin: "falla7", phrase_latin: "Falla7 f l-ard", phrase_fr: "Agriculteur dans la terre" },
+        { fr: "cuisinier", arabe: "طَبَّاخ", latin: "ṭabba5", phrase_latin: "Ṭabba5 kayṭebbak", phrase_fr: "Cuisinier cuisine" },
+        { fr: "architecte", arabe: "مُهَنْدِس", latin: "muhandis", phrase_latin: "Muhandis kaybni dyur", phrase_fr: "Architecte construit des maisons" },
+        { fr: "avocat", arabe: "مُحَامِي", latin: "mu7ami", phrase_latin: "Mu7ami f mahkama", phrase_fr: "Avocat au tribunal" },
+        { fr: "journaliste", arabe: "صَحَفِي", latin: "sa7afi", phrase_latin: "Sa7afi kaykteb", phrase_fr: "Journaliste écrit" },
+        { fr: "pilote", arabe: "طَيَّار", latin: "ṭayyar", phrase_latin: "Ṭayyar kayṭir tayara", phrase_fr: "Pilote vole un avion" },
+        { fr: "électricien", arabe: "كَهْرَبَائِي", latin: "kahrba'i", phrase_latin: "Kahrba'i kayṣla7 d-dw", phrase_fr: "Électricien répare l'électricité" },
+        { fr: "plombier", arabe: "سَبَّاك", latin: "sabbaq", phrase_latin: "Sabbaq kayṣla7 l-ma", phrase_fr: "Plombier répare l'eau" },
+        { fr: "dentiste", arabe: "طَبِيب أَسْنَان", latin: "tabib asnan", phrase_latin: "Tabib asnan kay3alj snan", phrase_fr: "Dentiste soigne les dents" },
+        { fr: "photographe", arabe: "مُصَوِّر", latin: "muṣawwir", phrase_latin: "Muṣawwir kayṣwwer", phrase_fr: "Photographe prend des photos" },
+        { fr: "chauffeur", arabe: "سَائِق", latin: "sa'iq", phrase_latin: "Sa'iq kaysuq kar", phrase_fr: "Chauffeur conduit le bus" },
+        { fr: "secrétaire", arabe: "كَاتِب", latin: "katib", phrase_latin: "Katib f bureau", phrase_fr: "Secrétaire au bureau" },
+        { fr: "directeur", arabe: "مُدِير", latin: "mudir", phrase_latin: "Mudir d madrasa", phrase_fr: "Directeur d'école" }
+      ],
+      loisirs: [
+        { fr: "football", arabe: "كُورَة", latin: "kora", phrase_latin: "Nl3abo kora", phrase_fr: "On joue au foot" },
+        { fr: "cinéma", arabe: "سِينِمَا", latin: "sinima", phrase_latin: "Ghadi nshuf film f sinima", phrase_fr: "Je vais voir un film au cinéma" },
+        { fr: "musique", arabe: "مُوسِيقَى", latin: "musiqa", phrase_latin: "Kan7eb musiqa", phrase_fr: "J'aime la musique" },
+        { fr: "guitare", arabe: "غِيتَار", latin: "ghitar", phrase_latin: "Kanl3eb ghitar", phrase_fr: "Je joue de la guitare" },
+        { fr: "piano", arabe: "بِيَانُو", latin: "byanu", phrase_latin: "Byanu 7lu", phrase_fr: "Le piano est beau" },
+        { fr: "danse", arabe: "رَقْص", latin: "raqṣ", phrase_latin: "Kan7eb rraqṣ", phrase_fr: "J'aime la danse" },
+        { fr: "lecture", arabe: "قِرَاءَة", latin: "qira'a", phrase_latin: "Qira'a mufida", phrase_fr: "La lecture est utile" },
+        { fr: "dessin", arabe: "رَسْم", latin: "rasm", phrase_latin: "Kan7eb rasm", phrase_fr: "J'aime le dessin" },
+        { fr: "peinture", arabe: "رَسْم بِالْأَلْوَان", latin: "rasm b alwan", phrase_latin: "Rasm b alwan 7lu", phrase_fr: "La peinture est belle" },
+        { fr: "natation", arabe: "سِبَاحَة", latin: "siba7a", phrase_latin: "Kan7eb siba7a", phrase_fr: "J'aime la natation" },
+        { fr: "basket", arabe: "كُورَة سَلَّة", latin: "kora salla", phrase_latin: "Nl3abo kora salla", phrase_fr: "On joue au basket" },
+        { fr: "tennis", arabe: "تِينِس", latin: "tinis", phrase_latin: "Nl3abo tinis", phrase_fr: "On joue au tennis" },
+        { fr: "vélo (loisir)", arabe: "بِيسْكْليت", latin: "bisklit", phrase_latin: "Kanrkab bisklit", phrase_fr: "Je fais du vélo" },
+        { fr: "pêche", arabe: "صَيْد", latin: "sayd", phrase_latin: "Kan7eb sayd l7ut", phrase_fr: "J'aime la pêche" },
+        { fr: "camping", arabe: "تَخْيِيم", latin: "takhayim", phrase_latin: "Ghadi ndiru takhayim", phrase_fr: "On va camper" },
+        { fr: "voyage (loisir)", arabe: "سِيَاحَة", latin: "siya7a", phrase_latin: "Kan7eb siya7a", phrase_fr: "J'aime voyager" },
+        { fr: "jeu vidéo", arabe: "لْعِيبْ دْجُوي", latin: "l3ib djwi", phrase_latin: "Kanl3eb djwi", phrase_fr: "Je joue aux jeux vidéo" },
+        { fr: "théâtre", arabe: "مَسْرَح", latin: "masra7", phrase_latin: "Ghadi nshuf masra7", phrase_fr: "Je vais voir du théâtre" },
+        { fr: "concert", arabe: "حَفْلَة مُوسِيقِيَّة", latin: "7afla musiqiya", phrase_latin: "7afla musiqiya 7lwa", phrase_fr: "Un beau concert" },
+        { fr: "fête", arabe: "حَفْلَة", latin: "7afla", phrase_latin: "7afla 3yid", phrase_fr: "Une fête d'anniversaire" }
+      ],
+      nourriture: [
+        { fr: "pain", arabe: "خُبْز", latin: "khobz", phrase_latin: "Khobz sakhun", phrase_fr: "Du pain chaud" },
+        { fr: "fromage", arabe: "جُبْن", latin: "jubn", phrase_latin: "Jubn abyad", phrase_fr: "Du fromage blanc" },
+        { fr: "œuf", arabe: "بَيْضَة", latin: "biḍa", phrase_latin: "Biḍa ma7luqa", phrase_fr: "Un œuf cuit" },
+        { fr: "viande", arabe: "لَحْم", latin: "la7m", phrase_latin: "La7m d l3ajl", phrase_fr: "De la viande de veau" },
+        { fr: "poulet", arabe: "دَجَاج", latin: "djaj", phrase_latin: "Djaj ma7luq", phrase_fr: "Du poulet cuit" },
+        { fr: "poisson (nourriture)", arabe: "حُوت", latin: "7ut", phrase_latin: "7ut ma7luq", phrase_fr: "Du poisson cuit" },
+        { fr: "riz", arabe: "رُز", latin: "ruzz", phrase_latin: "Ruzz b la7m", phrase_fr: "Du riz avec viande" },
+        { fr: "pâtes", arabe: "مَكْرُونَة", latin: "makruna", phrase_latin: "Makruna b ṭamatiṣ", phrase_fr: "Des pâtes à la tomate" },
+        { fr: "légumes", arabe: "خُضْرَة", latin: "khodra", phrase_latin: "Khodra taze", phrase_fr: "Des légumes frais" },
+        { fr: "salade", arabe: "سَلَادَة", latin: "salada", phrase_latin: "Salada khodra", phrase_fr: "Une salade verte" },
+        { fr: "soupe", arabe: "حَرِيرَة", latin: "7arira", phrase_latin: "7arira sakhuna", phrase_fr: "Une soupe chaude" },
+        { fr: "yaourt", arabe: "رَايِب", latin: "rayb", phrase_latin: "Rayb b3id", phrase_fr: "Du yaourt nature" },
+        { fr: "miel", arabe: "عَسَل", latin: "3asal", phrase_latin: "3asal 7lu", phrase_fr: "Du miel doux" },
+        { fr: "sucre", arabe: "سُكَّر", latin: "sukkar", phrase_latin: "Sukkar f atay", phrase_fr: "Du sucre dans le thé" },
+        { fr: "sel", arabe: "مْلَح", latin: "mla7", phrase_latin: "Mla7 f makla", phrase_fr: "Du sel dans le plat" },
+        { fr: "huile", arabe: "زَيْت", latin: "zit", phrase_latin: "Zit zaytun", phrase_fr: "De l'huile d'olive" },
+        { fr: "tomate", arabe: "طَمَاطِيش", latin: "ṭamatiṣ", phrase_latin: "Ṭamatiṣ 7mer", phrase_fr: "Des tomates rouges" },
+        { fr: "oignon", arabe: "بَصَل", latin: "baṣal", phrase_latin: "Baṣal f salada", phrase_fr: "Oignon dans la salade" },
+        { fr: "ail", arabe: "ثُوم", latin: "tum", phrase_latin: "Tum f makla", phrase_fr: "Ail dans le plat" },
+        { fr: "citron", arabe: "حَامُض", latin: "7amuḍ", phrase_latin: "7amuḍ f atay", phrase_fr: "Citron dans le thé" }
+      ]
+    };
+
+    var dialogues = [
+      { titre: "Chez le médecin", personnages: ["Patient", "Médecin"], repliques: [
+        { role: "Patient", latin: "Salam docteur, rasi kaywajja3ni.", francais: "Bonjour docteur, j'ai mal à la tête.", arabe: "سَلَام دُكْتُور، رَاسِي كَايْوَجَّعْنِي" },
+        { role: "Médecin", latin: "Shuf f 3iniya, 3ndek 7umma?", francais: "Regarde dans mes yeux, as-tu de la fièvre?", arabe: "شُوفْ فْعِينِيَّا، عِنْدَكْ حُمَّى؟" },
+        { role: "Patient", latin: "Ih, w 3ndi zkam.", francais: "Oui, et j'ai un rhume.", arabe: "إيْه، وَعِنْدِي زْكَام" },
+        { role: "Médecin", latin: "Khad had dwa w rta7.", francais: "Prends ce médicament et repose-toi.", arabe: "خُذْ هَادْ دْوَا وَرْتَّاحْ" }
+      ]},
+      { titre: "Au travail", personnages: ["Collègue1", "Collègue2"], repliques: [
+        { role: "Collègue1", latin: "Shno khadema dialak?", francais: "Quel est ton métier?", arabe: "شْنُو خْدَامَة دْيَالَكْ؟" },
+        { role: "Collègue2", latin: "Ana muhandis, w nta?", francais: "Je suis architecte, et toi?", arabe: "أَنَا مُهَنْدِسْ، وَنْتَا؟" },
+        { role: "Collègue1", latin: "Ana ustad f madrasa.", francais: "Je suis professeur à l'école.", arabe: "أَنَا أُسْتَاذْ فْمَدْرَسَة" }
+      ]},
+      { titre: "Loisirs du weekend", personnages: ["Ami1", "Ami2"], repliques: [
+        { role: "Ami1", latin: "Shno ghadi tdir l-weekend?", francais: "Que vas-tu faire ce weekend?", arabe: "شْنُو غَادِي تْدِيرْ لْوِيكْ-إِنْدْ؟" },
+        { role: "Ami2", latin: "Ghadi nl3abo kora f parc.", francais: "Je vais jouer au foot au parc.", arabe: "غَادِي نْلْعَبُو كُورَة فْبَارْك" },
+        { role: "Ami1", latin: "Wakha, njma3u hna!", francais: "D'accord, on se retrouve ici!", arabe: "وَخَا، نْجْمَعُو هْنَا!" }
+      ]},
+      { titre: "Au restaurant", personnages: ["Client", "Serveur"], repliques: [
+        { role: "Client", latin: "3tini l-menu 3afak.", francais: "Donne-moi le menu s'il te plaît.", arabe: "عْطِينِي لْمِينُو عَافَاك" },
+        { role: "Serveur", latin: "Ha huwa, shno bghiti?", francais: "Le voici, que veux-tu?", arabe: "هَا هُوَا، شْنُو بْغِيتِي؟" },
+        { role: "Client", latin: "Bghit djaj w ruzz.", francais: "Je veux du poulet et du riz.", arabe: "بْغِيتْ دْجَاجْ وَرُزّ" }
+      ]},
+      { titre: "À la pharmacie", personnages: ["Client", "Pharmacien"], repliques: [
+        { role: "Client", latin: "3ndi dwa l-k7ala?", francais: "As-tu un médicament pour la toux?", arabe: "عِنْدَكْ دْوَا لْكَحَالَة؟" },
+        { role: "Pharmacien", latin: "Ih, hada mzyan bzzaf.", francais: "Oui, celui-ci est très bien.", arabe: "إيْه، هَادَا مْزَيَانْ بْزَّاف" },
+        { role: "Client", latin: "Sh7al thaman?", francais: "Quel est le prix?", arabe: "شْحَالْ ثَمَنْ؟" }
+      ]}
+    ];
+
+    var verbes = [
+      { verbe: "soigner", racine: "3alej",
+        present: { ana: "kana3alej", nta: "kata3alej", nti: "kata3aleji", houwa: "kaya3alej", hiya: "kata3alej", 7na: "kana3aleju", ntouma: "kata3aleju", houma: "kaya3aleju" },
+        passe: { ana: "3alejt", nta: "3alejti", nti: "3alejti", houwa: "3alej", hiya: "3alejet", 7na: "3alejna", ntouma: "3alejtou", houma: "3aleju" },
+        futur: { ana: "ghadi na3alej", nta: "ghadi ta3alej", nti: "ghadi ta3aleji", houwa: "ghadi ya3alej", hiya: "ghadi ta3alej", 7na: "ghadi na3aleju", ntouma: "ghadi ta3aleju", houma: "ghadi ya3aleju" }
+      },
+      { verbe: "travailler", racine: "khdem",
+        present: { ana: "kanakhdem", nta: "katakhdem", nti: "katakh demi", houwa: "kayakhdem", hiya: "katakhdem", 7na: "kanakh demu", ntouma: "katakh demu", houma: "kayakh demu" },
+        passe: { ana: "khdemt", nta: "khdemti", nti: "khdemti", houwa: "khdem", hiya: "khdemet", 7na: "khdemna", ntouma: "khdemtou", houma: "kh demu" },
+        futur: { ana: "ghadi nakhdem", nta: "ghadi takhdem", nti: "ghadi takhdemi", houwa: "ghadi yakhdem", hiya: "ghadi takhdem", 7na: "ghadi nakh demu", ntouma: "ghadi takh demu", houma: "ghadi yakh demu" }
+      },
+      { verbe: "étudier", racine: "qra",
+        present: { ana: "kanqra", nta: "katqra", nti: "katqray", houwa: "kayqra", hiya: "katqra", 7na: "kanqraw", ntouma: "katqraw", houma: "kayqraw" },
+        passe: { ana: "qrit", nta: "qriti", nti: "qriti", houwa: "qra", hiya: "qrat", 7na: "qrina", ntouma: "qritou", houma: "qraw" },
+        futur: { ana: "ghadi nqra", nta: "ghadi tqra", nti: "ghadi tqray", houwa: "ghadi yqra", hiya: "ghadi tqra", 7na: "ghadi nqraw", ntouma: "ghadi tqraw", houma: "ghadi yqraw" }
+      },
+      { verbe: "cuire", racine: "ṭebbekh",
+        present: { ana: "kanṭebbekh", nta: "katṭebbekh", nti: "katṭebbekhi", houwa: "kayṭebbekh", hiya: "katṭebbekh", 7na: "kanṭebbekhu", ntouma: "katṭebbekhu", houma: "kayṭebbekhu" },
+        passe: { ana: "ṭebbekht", nta: "ṭebbekhti", nti: "ṭebbekhti", houwa: "ṭebbekh", hiya: "ṭebbekhet", 7na: "ṭebbekhna", ntouma: "ṭebbekhtou", houma: "ṭebbekhu" },
+        futur: { ana: "ghadi nṭebbekh", nta: "ghadi tṭebbekh", nti: "ghadi tṭebbekhi", houwa: "ghadi yṭebbekh", hiya: "ghadi tṭebbekh", 7na: "ghadi nṭebbekhu", ntouma: "ghadi tṭebbekhu", houma: "ghadi yṭebbekhu" }
+      },
+      { verbe: "manger", racine: "kel",
+        present: { ana: "kankel", nta: "katkel", nti: "katkeli", houwa: "kaykel", hiya: "katkel", 7na: "kankelu", ntouma: "katkelu", houma: "kaykelu" },
+        passe: { ana: "kelt", nta: "kelti", nti: "kelti", houwa: "kel", hiya: "kelet", 7na: "kelna", ntouma: "keltou", houma: "kelu" },
+        futur: { ana: "ghadi nkel", nta: "ghadi tkel", nti: "ghadi tkeli", houwa: "ghadi ykel", hiya: "ghadi tkel", 7na: "ghadi nkelu", ntouma: "ghadi tkelu", houma: "ghadi ykelu" }
+      },
+      { verbe: "boire", racine: "shreb",
+        present: { ana: "kanshreb", nta: "katshreb", nti: "katshrebi", houwa: "kayshreb", hiya: "katshreb", 7na: "kanshrebu", ntouma: "katshrebu", houma: "kayshrebu" },
+        passe: { ana: "shrebt", nta: "shrebti", nti: "shrebti", houwa: "shreb", hiya: "shrebet", 7na: "shrebna", ntouma: "shrebtou", houma: "shrebu" },
+        futur: { ana: "ghadi nshreb", nta: "ghadi tshreb", nti: "ghadi tshrebi", houwa: "ghadi yshreb", hiya: "ghadi tshreb", 7na: "ghadi nshrebu", ntouma: "ghadi tshrebu", houma: "ghadi yshrebu" }
+      },
+      { verbe: "acheter", racine: "shri",
+        present: { ana: "kanashri", nta: "katashri", nti: "katashri", houwa: "kayashri", hiya: "katashri", 7na: "kanashriw", ntouma: "katashriw", houma: "kayashriw" },
+        passe: { ana: "shrit", nta: "shriti", nti: "shriti", houwa: "shra", hiya: "shrat", 7na: "shrina", ntouma: "shritou", houma: "shraw" },
+        futur: { ana: "ghadi nashri", nta: "ghadi tashri", nti: "ghadi tashri", houwa: "ghadi yashri", hiya: "ghadi tashri", 7na: "ghadi nashriw", ntouma: "ghadi tashriw", houma: "ghadi yashriw" }
+      },
+      { verbe: "vendre", racine: "ba3",
+        present: { ana: "kanaba3", nta: "kataba3", nti: "kataba3i", houwa: "kayaba3", hiya: "kataba3", 7na: "kanaba3u", ntouma: "kataba3u", houma: "kayaba3u" },
+        passe: { ana: "ba3t", nta: "ba3ti", nti: "ba3ti", houwa: "ba3", hiya: "ba3et", 7na: "ba3na", ntouma: "ba3tou", houma: "ba3u" },
+        futur: { ana: "ghadi naba3", nta: "ghadi taba3", nti: "ghadi taba3i", houwa: "ghadi yaba3", hiya: "ghadi taba3", 7na: "ghadi naba3u", ntouma: "ghadi taba3u", houma: "ghadi yaba3u" }
+      },
+      { verbe: "construire", racine: "bni",
+        present: { ana: "kanabni", nta: "katabni", nti: "katabni", houwa: "kayabni", hiya: "katabni", 7na: "kanabniw", ntouma: "katabniw", houma: "kayabniw" },
+        passe: { ana: "bnit", nta: "bniti", nti: "bniti", houwa: "bna", hiya: "bnat", 7na: "bnina", ntouma: "bnitou", houma: "bnaw" },
+        futur: { ana: "ghadi nabni", nta: "ghadi tabni", nti: "ghadi tabni", houwa: "ghadi yabni", hiya: "ghadi tabni", 7na: "ghadi nabniw", ntouma: "ghadi tabniw", houma: "ghadi yabniw" }
+      },
+      { verbe: "réparer", racine: "ṣla7",
+        present: { ana: "kanaṣla7", nta: "kataṣla7", nti: "kataṣla7i", houwa: "kayaṣla7", hiya: "kataṣla7", 7na: "kanaṣla7u", ntouma: "kataṣla7u", houma: "kayaṣla7u" },
+        passe: { ana: "ṣla7t", nta: "ṣla7ti", nti: "ṣla7ti", houwa: "ṣla7", hiya: "ṣla7et", 7na: "ṣla7na", ntouma: "ṣla7tou", houma: "ṣla7u" },
+        futur: { ana: "ghadi naṣla7", nta: "ghadi taṣla7", nti: "ghadi taṣla7i", houwa: "ghadi yaṣla7", hiya: "ghadi taṣla7", 7na: "ghadi naṣla7u", ntouma: "ghadi taṣla7u", houma: "ghadi yaṣla7u" }
+      },
+      { verbe: "couper", racine: "qeṭṭe3",
+        present: { ana: "kanaqeṭṭe3", nta: "kataqeṭṭe3", nti: "kataqeṭṭe3i", houwa: "kayaqeṭṭe3", hiya: "kataqeṭṭe3", 7na: "kanaqeṭṭe3u", ntouma: "kataqeṭṭe3u", houma: "kayaqeṭṭe3u" },
+        passe: { ana: "qeṭṭe3t", nta: "qeṭṭe3ti", nti: "qeṭṭe3ti", houwa: "qeṭṭe3", hiya: "qeṭṭe3et", 7na: "qeṭṭe3na", ntouma: "qeṭṭe3tou", houma: "qeṭṭe3u" },
+        futur: { ana: "ghadi naqeṭṭe3", nta: "ghadi taqeṭṭe3", nti: "ghadi taqeṭṭe3i", houwa: "ghadi yaqeṭṭe3", hiya: "ghadi taqeṭṭe3", 7na: "ghadi naqeṭṭe3u", ntouma: "ghadi taqeṭṭe3u", houma: "ghadi yaqeṭṭe3u" }
+      },
+      { verbe: "laver", racine: "7sel",
+        present: { ana: "kana7sel", nta: "kata7sel", nti: "kata7seli", houwa: "kaya7sel", hiya: "kata7sel", 7na: "kana7selu", ntouma: "kata7selu", houma: "kaya7selu" },
+        passe: { ana: "7selt", nta: "7selti", nti: "7selti", houwa: "7sel", hiya: "7selet", 7na: "7selna", ntouma: "7seltou", houma: "7selu" },
+        futur: { ana: "ghadi na7sel", nta: "ghadi ta7sel", nti: "ghadi ta7seli", houwa: "ghadi ya7sel", hiya: "ghadi ta7sel", 7na: "ghadi na7selu", ntouma: "ghadi ta7selu", houma: "ghadi ya7selu" }
+      },
+      { verbe: "nettoyer", racine: "neḍḍef",
+        present: { ana: "kananeḍḍef", nta: "kataneḍḍef", nti: "kataneḍḍefi", houwa: "kayaneḍḍef", hiya: "kataneḍḍef", 7na: "kananeḍḍefu", ntouma: "kataneḍḍefu", houma: "kayaneḍḍefu" },
+        passe: { ana: "neḍḍeft", nta: "neḍḍefti", nti: "neḍḍefti", houwa: "neḍḍef", hiya: "neḍḍefet", 7na: "neḍḍefna", ntouma: "neḍḍeftou", houma: "neḍḍefu" },
+        futur: { ana: "ghadi naneḍḍef", nta: "ghadi taneḍḍef", nti: "ghadi taneḍḍefi", houwa: "ghadi yaneḍḍef", hiya: "ghadi taneḍḍef", 7na: "ghadi naneḍḍefu", ntouma: "ghadi taneḍḍefu", houma: "ghadi yaneḍḍefu" }
+      },
+      { verbe: "préparer", racine: "7eḍḍer",
+        present: { ana: "kana7eḍḍer", nta: "kata7eḍḍer", nti: "kata7eḍḍeri", houwa: "kaya7eḍḍer", hiya: "kata7eḍḍer", 7na: "kana7eḍḍeru", ntouma: "kata7eḍḍeru", houma: "kaya7eḍḍeru" },
+        passe: { ana: "7eḍḍert", nta: "7eḍḍerti", nti: "7eḍḍerti", houwa: "7eḍḍer", hiya: "7eḍḍeret", 7na: "7eḍḍerna", ntouma: "7eḍḍertou", houma: "7eḍḍeru" },
+        futur: { ana: "ghadi na7eḍḍer", nta: "ghadi ta7eḍḍer", nti: "ghadi ta7eḍḍeri", houwa: "ghadi ya7eḍḍer", hiya: "ghadi ta7eḍḍer", 7na: "ghadi na7eḍḍeru", ntouma: "ghadi ta7eḍḍeru", houma: "ghadi ya7eḍḍeru" }
+      },
+      { verbe: "inviter", racine: "d3a",
+        present: { ana: "kanad3a", nta: "katad3a", nti: "katad3ay", houwa: "kayad3a", hiya: "katad3a", 7na: "kanad3aw", ntouma: "katad3aw", houma: "kayad3aw" },
+        passe: { ana: "d3it", nta: "d3iti", nti: "d3iti", houwa: "d3a", hiya: "d3at", 7na: "d3ina", ntouma: "d3itou", houma: "d3aw" },
+        futur: { ana: "ghadi nad3a", nta: "ghadi tad3a", nti: "ghadi tad3ay", houwa: "ghadi yad3a", hiya: "ghadi tad3a", 7na: "ghadi nad3aw", ntouma: "ghadi tad3aw", houma: "ghadi yad3aw" }
+      },
+      { verbe: "visiter", racine: "zar",
+        present: { ana: "kanazar", nta: "katazar", nti: "katazari", houwa: "kayazar", hiya: "katazar", 7na: "kanazarou", ntouma: "katazarou", houma: "kayazarou" },
+        passe: { ana: "zart", nta: "zarti", nti: "zarti", houwa: "zar", hiya: "zaret", 7na: "zarna", ntouma: "zartou", houma: "zaru" },
+        futur: { ana: "ghadi nazar", nta: "ghadi tazar", nti: "ghadi tazari", houwa: "ghadi yazar", hiya: "ghadi tazar", 7na: "ghadi nazarou", ntouma: "ghadi tazarou", houma: "ghadi yazarou" }
+      },
+      { verbe: "photographier", racine: "ṣwwer",
+        present: { ana: "kanaṣwwer", nta: "kataṣwwer", nti: "kataṣwweri", houwa: "kayaṣwwer", hiya: "kataṣwwer", 7na: "kanaṣwweru", ntouma: "kataṣwweru", houma: "kayaṣwweru" },
+        passe: { ana: "ṣwwert", nta: "ṣwwerti", nti: "ṣwwerti", houwa: "ṣwwer", hiya: "ṣwweret", 7na: "ṣwwerna", ntouma: "ṣwwertou", houma: "ṣwweru" },
+        futur: { ana: "ghadi naṣwwer", nta: "ghadi taṣwwer", nti: "ghadi taṣwweri", houwa: "ghadi yaṣwwer", hiya: "ghadi taṣwwer", 7na: "ghadi naṣwweru", ntouma: "ghadi taṣwweru", houma: "ghadi yaṣwweru" }
+      },
+      { verbe: "chanter (2)", racine: "ghenni",
+        present: { ana: "kanaghenni", nta: "kataghenni", nti: "kataghenni", houwa: "kayaghenni", hiya: "kataghenni", 7na: "kanaghenniw", ntouma: "kataghenniw", houma: "kayaghenniw" },
+        passe: { ana: "ghennit", nta: "ghenniti", nti: "ghenniti", houwa: "ghenna", hiya: "ghennat", 7na: "ghennina", ntouma: "ghennitou", houma: "ghennaw" },
+        futur: { ana: "ghadi naghenni", nta: "ghadi taghenni", nti: "ghadi taghenni", houwa: "ghadi yaghenni", hiya: "ghadi taghenni", 7na: "ghadi naghenniw", ntouma: "ghadi taghenniw", houma: "ghadi yaghenniw" }
+      },
+      { verbe: "gagner", racine: "rbe7",
+        present: { ana: "kanarbe7", nta: "katarbe7", nti: "katarbe7i", houwa: "kayarbe7", hiya: "katarbe7", 7na: "kanarbe7u", ntouma: "katarbe7u", houma: "kayarbe7u" },
+        passe: { ana: "rbe7t", nta: "rbe7ti", nti: "rbe7ti", houwa: "rbe7", hiya: "rbe7et", 7na: "rbe7na", ntouma: "rbe7tou", houma: "rbe7u" },
+        futur: { ana: "ghadi narbe7", nta: "ghadi tarbe7", nti: "ghadi tarbe7i", houwa: "ghadi yarbe7", hiya: "ghadi tarbe7", 7na: "ghadi narbe7u", ntouma: "ghadi tarbe7u", houma: "ghadi yarbe7u" }
+      },
+      { verbe: "perdre", racine: "khsar",
+        present: { ana: "kanakhsar", nta: "katakhsar", nti: "katakhsari", houwa: "kayakhsar", hiya: "katakhsar", 7na: "kanakhsaru", ntouma: "katakhsaru", houma: "kayakhsaru" },
+        passe: { ana: "khsart", nta: "khsarti", nti: "khsarti", houwa: "khsar", hiya: "khsaret", 7na: "khsarna", ntouma: "khsartou", houma: "khsaru" },
+        futur: { ana: "ghadi nakhsar", nta: "ghadi takhsar", nti: "ghadi takhsari", houwa: "ghadi yakhsar", hiya: "ghadi takhsar", 7na: "ghadi nakhsaru", ntouma: "ghadi takhsaru", houma: "ghadi yakhsaru" }
+      }
+    ];
+
+    var personLabels = [
+      { key: "ana", label: "ana (je)" }, { key: "nta", label: "nta (tu masc.)" },
+      { key: "nti", label: "nti (tu fém.)" }, { key: "houwa", label: "houwa (il)" },
+      { key: "hiya", label: "hiya (elle)" }, { key: "7na", label: "7na (nous)" },
+      { key: "ntouma", label: "ntouma (vous)" }, { key: "houma", label: "houma (ils/elles)" }
+    ];
+
+    // ============================================
+    // ÉTAT GLOBAL
+    // ============================================
+    var quizQuestions = [];
+    var currentQuestion = 0;
+    var score = 0;
+
+    // ============================================
+    // FONCTIONS UTILITAIRES
+    // ============================================
+    function escapeHtml(text) {
+      if (typeof text !== 'string') return text;
+      var map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+      return text.replace(/[&<>"']/g, function(m) { return map[m]; });
     }
 
-    function afficherLecons() {
-        const contenu = document.getElementById('contenu');
-        let html = '<h2>📘 Leçons du mois 4</h2>';
-        const themes = [...new Set(vocabulaireMois4.map(m => m.theme))];
+    function shuffleArray(array) {
+      var arr = array.slice();
+      for (var i = arr.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+      }
+      return arr;
+    }
+
+    // ============================================
+    // NAVIGATION TABS
+    // ============================================
+    function showTab(tabName) {
+      var contents = document.querySelectorAll('.tab-content');
+      for (var i = 0; i < contents.length; i++) {
+        contents[i].classList.remove('active');
+      }
+      
+      var selectedContent = document.getElementById('content-' + tabName);
+      if (selectedContent) {
+        selectedContent.classList.add('active');
+      }
+      
+      var buttons = document.querySelectorAll('.tab-btn');
+      for (var j = 0; j < buttons.length; j++) {
+        buttons[j].classList.remove('tab-active');
+        buttons[j].classList.add('bg-white', 'text-gray-700', 'hover:bg-red-100');
+      }
+      
+      var activeBtn = document.getElementById('tab-' + tabName);
+      if (activeBtn) {
+        activeBtn.classList.add('tab-active');
+        activeBtn.classList.remove('bg-white', 'text-gray-700', 'hover:bg-red-100');
+      }
+      
+      if (window.innerWidth < 768) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+
+    // ============================================
+    // RENDU VOCABULAIRE
+    // ============================================
+    function renderVocab() {
+      var themes = [
+        { id: 'sante', data: vocabulaire.sante },
+        { id: 'metiers',  vocabulaire.metiers },
+        { id: 'loisirs',  vocabulaire.loisirs },
+        { id: 'nourriture', data: vocabulaire.nourriture }
+      ];
+      
+      for (var t = 0; t < themes.length; t++) {
+        var theme = themes[t];
+        var container = document.getElementById('theme-' + theme.id);
+        if (!container) continue;
         
-        themes.forEach(theme => {
-            const mots = vocabulaireMois4.filter(m => m.theme === theme);
-            const id = `4-${theme}`;
-            const estTerminé = leçonsTerminées.includes(id);
-            
-            html += `<div class="theme-carte">`;
-            html += `<div class="theme-header ${estTerminé ? 'completed' : ''}">`;
-            html += `<span>${theme}</span>`;
-            html += `<span style="font-size:0.9rem; font-weight:normal;">${mots.length} mots ${estTerminé ? '✅' : ''}</span>`;
-            html += `</div>`;
-            html += `<div class="theme-content">`;
-            
-            mots.forEach(m => {
-                html += `<div class="mot-item">`;
-                html += `<div class="mot-grid">`;
-                html += `<div><span class="mot-label">Français</span><br><span class="francais">${m.fr}</span></div>`;
-                html += `<div><span class="mot-label">Arabe</span><br><span class="arabe">${m.arabe}</span></div>`;
-                html += `<div><span class="mot-label">Latin</span><br><span class="latin">${m.latin}</span></div>`;
-                html += `<div style="grid-column: 1/-1;"><span class="mot-label">Exemple</span><br><span class="phrase"><strong style="color:#c62828;">${m.phrase_latin}</strong> — ${m.phrase_fr}</span></div>`;
-                html += `</div>`;
-                html += `</div>`;
-            });
-            
-            if (!estTerminé) {
-                html += `<button class="btn-terminer" data-mois="4" data-theme="${theme}">✅ Marquer comme terminée</button>`;
-            } else {
-                html += `<p style="color:#2e7d32; text-align:center; font-weight:bold; padding:10px;">✔ Leçon terminée</p>`;
-            }
-            
-            html += `</div>`;
-            html += `</div>`;
-        });
+        var html = '';
+        for (var i = 0; i < theme.data.length; i++) {
+          var word = theme.data[i];
+          html += '<div class="word-card p-3 rounded-lg border border-gray-200 transition-all">';
+          html += '<div class="flex justify-between items-center mb-2">';
+          html += '<span class="font-semibold text-gray-800">' + escapeHtml(word.fr) + '</span>';
+          html += '<span class="text-red-600 font-semibold">' + escapeHtml(word.latin) + '</span>';
+          html += '</div>';
+          html += '<div class="text-right"><span class="arabic-text text-xl text-gray-700">' + escapeHtml(word.arabe) + '</span></div>';
+          html += '<div class="mt-2 text-sm text-gray-500 border-t pt-2">';
+          html += '<p><span class="text-red-600">' + escapeHtml(word.phrase_latin) + '</span></p>';
+          html += '<p>' + escapeHtml(word.phrase_fr) + '</p>';
+          html += '</div></div>';
+        }
+        container.innerHTML = html;
+      }
+    }
+
+    // ============================================
+    // RENDU DIALOGUES
+    // ============================================
+    function renderDialogues() {
+      var container = document.getElementById('dialogues-container');
+      if (!container) return;
+      
+      var html = '';
+      for (var i = 0; i < dialogues.length; i++) {
+        var dialogue = dialogues[i];
+        html += '<div class="bg-white rounded-2xl shadow-lg overflow-hidden">';
+        html += '<div class="bg-gradient-to-r from-red-500 to-orange-500 p-4">';
+        html += '<h3 class="text-xl font-bold text-white">💬 ' + escapeHtml(dialogue.titre) + '</h3>';
+        html += '<p class="text-red-100 text-sm">Personnages: ' + escapeHtml(dialogue.personnages.join(', ')) + '</p>';
+        html += '</div><div class="p-4 space-y-3">';
         
-        contenu.innerHTML = html;
-
-        document.querySelectorAll('.btn-terminer').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const mois = e.target.dataset.mois;
-                const theme = e.target.dataset.theme;
-                terminerLecon(mois, theme);
-            });
-        });
-    }
-
-    function afficherDialogues() {
-        const contenu = document.getElementById('contenu');
-        let html = '<h2>💬 Dialogues du mois 4</h2>';
-        dialogues.forEach(d => {
-            html += `<div class="dialogue"><div class="personnages">${d.titre} (${d.personnages.join(' & ')})</div>`;
-            d.repliques.forEach(r => {
-                html += `<div class="replique">`;
-                html += `<span class="role">${r.role}</span>`;
-                html += `<span class="latin-replique">${r.latin}</span>`;
-                html += `<span class="francais-replique">${r.francais}</span>`;
-                html += `<span class="arabe" style="font-size:1.2rem;">${r.arabe}</span>`;
-                html += `</div>`;
-            });
-            html += `</div>`;
-        });
-        contenu.innerHTML = html;
-    }
-
-    function afficherConjugaisons() {
-        const contenu = document.getElementById('contenu');
-        let html = '<h2>⚙️ Nouveaux verbes du mois 4</h2>';
-        verbes.forEach(v => {
-            html += `<h3>${v.verbe} (${v.racine})</h3>`;
-            html += `<table class="tableau-verbe"><tr><th>Personne</th><th>Présent</th><th>Passé</th><th>Futur</th></tr>`;
-            const pers = ['ana', 'nta', 'houwa', 'hna', 'ntuma', 'houma'];
-            pers.forEach(p => {
-                html += `<tr><td>${p}</td><td>${v.present[p] || ''}</td><td>${v.passe[p] || ''}</td><td>${v.futur[p] || ''}</td></tr>`;
-            });
-            html += '</table>';
-        });
-        contenu.innerHTML = html;
-    }
-
-    function afficherRevision() {
-        const contenu = document.getElementById('contenu');
-        let html = '<h2>🔄 Révision - Tous les mots (mois 1,2,3,4)</h2>';
-        html += '<div class="revision-options"><button class="btn-revision" id="btnTousMots">📚 Tous les mots</button>';
-        html += '<button class="btn-revision" id="btnMois1">Mois 1</button>';
-        html += '<button class="btn-revision" id="btnMois2">Mois 2</button>';
-        html += '<button class="btn-revision" id="btnMois3">Mois 3</button>';
-        html += '<button class="btn-revision" id="btnMois4">Mois 4</button></div>';
-        html += '<div id="listeRevision" class="liste-revision"></div>';
-        contenu.innerHTML = html;
-
-        function getMonthClass(mois) {
-            return 'mois-' + mois;
+        for (var j = 0; j < dialogue.repliques.length; j++) {
+          var rep = dialogue.repliques[j];
+          var alignClass = (rep.role.indexOf('Client') !== -1 || rep.role.indexOf('Ami') !== -1 || rep.role.indexOf('Patient') !== -1 || rep.role.indexOf('Collègue') !== -1) ? 'bg-red-50 ml-4' : 'bg-gray-50 mr-4';
+          html += '<div class="p-3 rounded-lg ' + alignClass + '">';
+          html += '<div class="font-semibold text-sm text-gray-600 mb-1">' + escapeHtml(rep.role) + '</div>';
+          html += '<div class="flex justify-between items-center mb-1 flex-wrap gap-2">';
+          html += '<span class="text-red-600 font-semibold">' + escapeHtml(rep.latin) + '</span>';
+          html += '<span class="arabic-text text-lg">' + escapeHtml(rep.arabe) + '</span>';
+          html += '</div><div class="text-gray-500 text-sm">' + escapeHtml(rep.francais) + '</div></div>';
         }
+        html += '</div></div>';
+      }
+      container.innerHTML = html;
+    }
 
-        function afficherListe(mots) {
-            let listHtml = `<p style="margin-bottom:15px; color:#666;">${mots.length} mots affichés</p>`;
-            mots.forEach(m => {
-                listHtml += `<div class="carte-revision">`;
-                listHtml += `<span class="mois-badge ${getMonthClass(m.mois)}">Mois ${m.mois}</span>`;
-                listHtml += `<span class="francais">${m.fr}</span><br>`;
-                listHtml += `<span class="arabe">${m.arabe}</span><br>`;
-                listHtml += `<span class="latin">${m.latin}</span><br>`;
-                listHtml += `<small style="color:#888;">${m.phrase_latin} — ${m.phrase_fr}</small><br>`;
-                listHtml += `<small style="color:#aaa;">${m.theme}</small>`;
-                listHtml += `</div>`;
-            });
-            document.getElementById('listeRevision').innerHTML = listHtml;
+    // ============================================
+    // RENDU VERBES
+    // ============================================
+    function renderVerbs() {
+      var container = document.getElementById('verbes-container');
+      if (!container) return;
+      
+      var html = '';
+      for (var i = 0; i < verbes.length; i++) {
+        var verb = verbes[i];
+        html += '<div class="bg-white rounded-2xl shadow-lg overflow-hidden">';
+        html += '<div class="bg-gradient-to-r from-red-500 to-orange-500 p-4">';
+        html += '<h3 class="text-xl font-bold text-white">🔤 ' + escapeHtml(verb.verbe) + '</h3>';
+        html += '<p class="text-red-100">Racine: ' + escapeHtml(verb.racine) + '</p>';
+        html += '</div><div class="p-4 grid gap-4">';
+        
+        html += '<div><h4 class="font-bold text-red-600 mb-2">Présent</h4>';
+        html += '<div class="grid grid-cols-2 md:grid-cols-4 gap-2">';
+        for (var j = 0; j < personLabels.length; j++) {
+          var p = personLabels[j];
+          html += '<div class="p-2 bg-red-50 rounded">';
+          html += '<div class="text-xs text-gray-500">' + escapeHtml(p.label) + '</div>';
+          html += '<div class="font-semibold">' + escapeHtml(verb.present[p.key]) + '</div></div>';
         }
-
-        document.getElementById('btnTousMots').addEventListener('click', () => afficherListe(tousLesMots));
-        document.getElementById('btnMois1').addEventListener('click', () => afficherListe(vocabulaireMois1));
-        document.getElementById('btnMois2').addEventListener('click', () => afficherListe(vocabulaireMois2));
-        document.getElementById('btnMois3').addEventListener('click', () => afficherListe(vocabulaireMois3));
-        document.getElementById('btnMois4').addEventListener('click', () => afficherListe(vocabulaireMois4));
-
-        afficherListe(tousLesMots);
+        html += '</div></div>';
+        
+        html += '<div><h4 class="font-bold text-amber-600 mb-2">Passé</h4>';
+        html += '<div class="grid grid-cols-2 md:grid-cols-4 gap-2">';
+        for (var k = 0; k < personLabels.length; k++) {
+          var p2 = personLabels[k];
+          html += '<div class="p-2 bg-amber-50 rounded">';
+          html += '<div class="text-xs text-gray-500">' + escapeHtml(p2.label) + '</div>';
+          html += '<div class="font-semibold">' + escapeHtml(verb.passe[p2.key]) + '</div></div>';
+        }
+        html += '</div></div>';
+        
+        html += '<div><h4 class="font-bold text-purple-600 mb-2">Futur</h4>';
+        html += '<div class="grid grid-cols-2 md:grid-cols-4 gap-2">';
+        for (var l = 0; l < personLabels.length; l++) {
+          var p3 = personLabels[l];
+          html += '<div class="p-2 bg-purple-50 rounded">';
+          html += '<div class="text-xs text-gray-500">' + escapeHtml(p3.label) + '</div>';
+          html += '<div class="font-semibold">' + escapeHtml(verb.futur[p3.key]) + '</div></div>';
+        }
+        html += '</div></div></div></div>';
+      }
+      container.innerHTML = html;
     }
 
-    function afficherOnglet(onglet) {
-        document.querySelectorAll('.onglet').forEach(btn => btn.classList.remove('actif'));
-        document.querySelector(`[data-onglet="${onglet}"]`).classList.add('actif');
-        if (onglet === 'accueil') afficherAccueil();
-        else if (onglet === 'lecons') afficherLecons();
-        else if (onglet === 'dialogues') afficherDialogues();
-        else if (onglet === 'conjugaisons') afficherConjugaisons();
-        else if (onglet === 'revision') afficherRevision();
+    // ============================================
+    // QUIZ FUNCTIONS
+    // ============================================
+    function generateOptions(correct, allOptions) {
+      var unique = [];
+      var seen = {};
+      for (var i = 0; i < allOptions.length; i++) {
+        if (!seen[allOptions[i]]) {
+          seen[allOptions[i]] = true;
+          unique.push(allOptions[i]);
+        }
+      }
+      var wrong = [];
+      for (var j = 0; j < unique.length && wrong.length < 3; j++) {
+        if (unique[j] !== correct) {
+          wrong.push(unique[j]);
+        }
+      }
+      wrong = shuffleArray(wrong).slice(0, 3);
+      var options = shuffleArray([correct].concat(wrong));
+      return options;
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
-        document.querySelectorAll('.onglet').forEach(btn => {
-            btn.addEventListener('click', () => afficherOnglet(btn.dataset.onglet));
+    function startQuiz(type) {
+      currentQuestion = 0;
+      score = 0;
+      
+      if (type === 'vocabulaire') {
+        var allWords = vocabulaire.sante.concat(vocabulaire.metiers, vocabulaire.loisirs, vocabulaire.nourriture);
+        var shuffled = shuffleArray(allWords).slice(0, 10);
+        quizQuestions = [];
+        for (var i = 0; i < shuffled.length; i++) {
+          var word = shuffled[i];
+          quizQuestions.push({
+            question: 'Comment dit-on "' + word.fr + '" en darija?',
+            answer: word.latin,
+            options: generateOptions(word.latin, allWords.map(function(w) { return w.latin; }))
+          });
+        }
+      } else if (type === 'verbes') {
+        var shuffledVerbs = shuffleArray(verbes).slice(0, 10);
+        quizQuestions = [];
+        for (var j = 0; j < shuffledVerbs.length; j++) {
+          var verb = shuffledVerbs[j];
+          quizQuestions.push({
+            question: 'Quelle est la racine du verbe "' + verb.verbe + '"?',
+            answer: verb.racine,
+            options: generateOptions(verb.racine, verbes.map(function(v) { return v.racine; }))
+          });
+        }
+      } else if (type === 'global') {
+        var allWords = vocabulaire.sante.concat(vocabulaire.metiers, vocabulaire.loisirs, vocabulaire.nourriture);
+        var shuffled = shuffleArray(allWords).slice(0, 10);
+        quizQuestions = [];
+        for (var k = 0; k < shuffled.length; k++) {
+          var word = shuffled[k];
+          quizQuestions.push({
+            question: 'Comment dit-on "' + word.fr + '" en darija?',
+            answer: word.latin,
+            options: generateOptions(word.latin, allWords.map(function(w) { return w.latin; }))
+          });
+        }
+      }
+      
+      document.getElementById('quiz-area').classList.remove('hidden');
+      document.getElementById('quiz-end').classList.add('hidden');
+      document.getElementById('quiz-total').textContent = quizQuestions.length;
+      showQuestion();
+    }
+
+    function showQuestion() {
+      var q = quizQuestions[currentQuestion];
+      document.getElementById('quiz-current').textContent = (currentQuestion + 1);
+      document.getElementById('quiz-question').textContent = q.question;
+      document.getElementById('quiz-result').classList.add('hidden');
+      document.getElementById('next-btn').classList.add('hidden');
+      
+      var container = document.getElementById('quiz-options');
+      var html = '';
+      for (var i = 0; i < q.options.length; i++) {
+        var opt = q.options[i];
+        var escapedOpt = opt.replace(/"/g, '&quot;');
+        html += '<button data-answer="' + escapedOpt + '" class="quiz-option p-4 bg-white border-2 border-gray-200 rounded-xl font-semibold hover:border-red-400 hover:bg-red-50 transition-all">';
+        html += escapeHtml(opt) + '</button>';
+      }
+      container.innerHTML = html;
+      
+      var buttons = container.querySelectorAll('.quiz-option');
+      for (var j = 0; j < buttons.length; j++) {
+        buttons[j].addEventListener('click', function() {
+          checkAnswer(this.getAttribute('data-answer'));
         });
-        updateProgressBar();
-        afficherOnglet('accueil');
+      }
+    }
+
+    function checkAnswer(selected) {
+      var q = quizQuestions[currentQuestion];
+      var result = document.getElementById('quiz-result');
+      var buttons = document.querySelectorAll('.quiz-option');
+      
+      for (var i = 0; i < buttons.length; i++) {
+        buttons[i].disabled = true;
+        var btnAnswer = buttons[i].getAttribute('data-answer');
+        if (btnAnswer === q.answer) {
+          buttons[i].classList.add('bg-green-100', 'border-green-500');
+        } else if (btnAnswer === selected) {
+          buttons[i].classList.add('bg-red-100', 'border-red-500');
+        }
+      }
+      
+      if (selected === q.answer) {
+        score++;
+        result.textContent = '✅ Correct !';
+        result.className = 'text-center mt-4 text-lg font-bold text-green-600';
+        saveProgress(q.answer);
+      } else {
+        result.textContent = '❌ Faux ! Réponse: ' + q.answer;
+        result.className = 'text-center mt-4 text-lg font-bold text-red-600';
+      }
+      result.classList.remove('hidden');
+      document.getElementById('next-btn').classList.remove('hidden');
+    }
+
+    function nextQuestion() {
+      currentQuestion++;
+      if (currentQuestion < quizQuestions.length) {
+        showQuestion();
+      } else {
+        document.getElementById('quiz-area').classList.add('hidden');
+        document.getElementById('quiz-end').classList.remove('hidden');
+        document.getElementById('quiz-score').textContent = score;
+        document.getElementById('quiz-total-end').textContent = quizQuestions.length;
+        updateProgress();
+      }
+    }
+
+    function resetQuiz() {
+      document.getElementById('quiz-area').classList.add('hidden');
+      document.getElementById('quiz-end').classList.add('hidden');
+    }
+
+    // ============================================
+    // PROGRESSION
+    // ============================================
+    function saveProgress(answer) {
+      try {
+        var mastered = JSON.parse(localStorage.getItem('darijaMois4Mastered') || '[]');
+        if (mastered.indexOf(answer) === -1) {
+          mastered.push(answer);
+          localStorage.setItem('darijaMois4Mastered', JSON.stringify(mastered));
+          updateProgress();
+        }
+      } catch (e) {
+        console.warn('localStorage error:', e);
+      }
+    }
+
+    function updateProgress() {
+      try {
+        var mastered = JSON.parse(localStorage.getItem('darijaMois4Mastered') || '[]');
+        var total = vocabulaire.sante.length + vocabulaire.metiers.length + vocabulaire.loisirs.length + vocabulaire.nourriture.length;
+        var progress = Math.min(100, Math.round((mastered.length / total) * 100));
+        document.getElementById('progress-bar').style.width = progress + '%';
+        document.getElementById('progress-text').textContent = progress + '%';
+      } catch (e) {
+        console.warn('Progress error:', e);
+      }
+    }
+
+    // ============================================
+    // INITIALISATION - TOUS LES EVENT LISTENERS
+    // ============================================
+    document.addEventListener('DOMContentLoaded', function() {
+      renderVocab();
+      renderDialogues();
+      renderVerbs();
+      updateProgress();
+      
+      var tabButtons = document.querySelectorAll('.tab-btn');
+      for (var i = 0; i < tabButtons.length; i++) {
+        tabButtons[i].addEventListener('click', function() {
+          var tabName = this.getAttribute('data-tab');
+          if (tabName) showTab(tabName);
+        });
+      }
+      
+      var themeCards = document.querySelectorAll('.theme-card');
+      for (var j = 0; j < themeCards.length; j++) {
+        themeCards[j].addEventListener('click', function() {
+          var tabName = this.getAttribute('data-tab');
+          if (tabName) showTab(tabName);
+        });
+      }
+      
+      var quizBtnVocab = document.getElementById('quiz-btn-vocab');
+      var quizBtnVerbes = document.getElementById('quiz-btn-verbes');
+      var quizBtnGlobal = document.getElementById('quiz-btn-global');
+      var nextBtn = document.getElementById('next-btn');
+      var resetQuizBtn = document.getElementById('reset-quiz-btn');
+      
+      if (quizBtnVocab) quizBtnVocab.addEventListener('click', function() { startQuiz('vocabulaire'); });
+      if (quizBtnVerbes) quizBtnVerbes.addEventListener('click', function() { startQuiz('verbes'); });
+      if (quizBtnGlobal) quizBtnGlobal.addEventListener('click', function() { startQuiz('global'); });
+      if (nextBtn) nextBtn.addEventListener('click', nextQuestion);
+      if (resetQuizBtn) resetQuizBtn.addEventListener('click', resetQuiz);
+      
+      console.log('✅ Mois 4 - Application initialisée avec succès');
     });
-})();
-</script>
+  </script>
 </body>
 </html>
